@@ -1,0 +1,113 @@
+# generated: 2026-03-31
+# last_updated: 2026-03-31T12:55:00Z
+# project: ai-competitor-price-tracker
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-03-31
+last_updated: 2026-03-31T12:55:00Z
+project: ai-competitor-price-tracker
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: Project Foundation & App Shell
+  epic-1: in-progress
+  1-1-initialize-nextjs-project-with-design-system: ready-for-dev
+  1-2-app-shell-layout-with-sidebar-navigation: backlog
+  1-3-authentication-and-session-management: backlog
+  1-4-global-search-command-palette: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Product Management & Tracking Configuration
+  epic-2: backlog
+  2-1-product-list-view-with-filtering-and-sorting: backlog
+  2-2-add-product-wizard-3-step-flow: backlog
+  2-3-product-detail-page: backlog
+  2-4-edit-and-delete-product: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Competitor Source Management
+  epic-3: backlog
+  3-1-competitor-sources-list-and-health-monitor: backlog
+  3-2-add-edit-competitor-source: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Automated Scraping Engine (Backend)
+  epic-4: backlog
+  4-1-scraping-job-scheduler-and-queue: backlog
+  4-2-price-data-extraction-and-normalization: backlog
+  4-3-scraping-status-dashboard-integration: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Price History & Time-Series Storage
+  epic-5: backlog
+  5-1-time-series-data-model-and-api: backlog
+  5-2-price-history-chart-component: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: AI-Powered Price Analysis
+  epic-6: backlog
+  6-1-price-trend-detection: backlog
+  6-2-anomaly-detection: backlog
+  6-3-competitive-positioning-analysis: backlog
+  6-4-ai-pricing-recommendations: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Alerting & Notifications
+  epic-7: backlog
+  7-1-alert-rule-builder: backlog
+  7-2-notification-delivery-email-slack-webhook: backlog
+  7-3-alert-history-and-activity-log: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Dashboard & Reporting
+  epic-8: backlog
+  8-1-dashboard-home-page: backlog
+  8-2-reports-center: backlog
+  8-3-first-time-user-onboarding: backlog
+  epic-8-retrospective: optional
+
+  # Epic 9: Settings & Account Management
+  epic-9: backlog
+  9-1-notification-channel-settings: backlog
+  9-2-data-retention-and-api-keys: backlog
+  epic-9-retrospective: optional
+
+  # Epic 10: Infrastructure & DevOps
+  epic-10: backlog
+  10-1-docker-compose-development-environment: backlog
+  10-2-ci-cd-pipeline: backlog
+  10-3-monitoring-and-health-checks: backlog
+  epic-10-retrospective: optional
