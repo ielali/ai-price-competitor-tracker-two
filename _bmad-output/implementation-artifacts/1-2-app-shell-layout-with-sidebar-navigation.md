@@ -1,6 +1,6 @@
 # Story 1.2: App Shell Layout with Sidebar Navigation
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -21,65 +21,65 @@ so that I can efficiently navigate between all sections of the application with 
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create the root dashboard layout (AC: #5)
-  - [ ] Create `apps/web/src/app/(dashboard)/layout.tsx` as the shared layout for all authenticated pages
-  - [ ] Layout structure: sidebar on the left + main content area on the right (flex row)
-  - [ ] Content area: max-width 1440px, `mx-auto`, `p-6` (24px padding)
-  - [ ] Add `<a href="#main-content" className="sr-only focus:not-sr-only ...">Skip to content</a>` as the first element in the layout
+- [x] Task 1: Create the root dashboard layout (AC: #5)
+  - [x] Create `apps/web/src/app/(dashboard)/layout.tsx` as the shared layout for all authenticated pages
+  - [x] Layout structure: sidebar on the left + main content area on the right (flex row)
+  - [x] Content area: max-width 1440px, `mx-auto`, `p-6` (24px padding)
+  - [x] Add `<a href="#main-content" className="sr-only focus:not-sr-only ...">Skip to content</a>` as the first element in the layout
 
-- [ ] Task 2: Build the Sidebar component (AC: #1, #2, #3)
-  - [ ] Create `apps/web/src/components/layout/sidebar.tsx`
-  - [ ] Nav items with Lucide icons:
+- [x] Task 2: Build the Sidebar component (AC: #1, #2, #3)
+  - [x] Create `apps/web/src/components/layout/sidebar.tsx`
+  - [x] Nav items with Lucide icons:
     - Dashboard → `LayoutDashboard` icon → `/`
     - Products → `Package` icon → `/products`
     - Competitors → `Users` icon → `/competitors`
     - Alerts → `Bell` icon → `/alerts`
     - Reports → `BarChart3` icon → `/reports`
     - Settings → `Settings` icon → `/settings` (positioned at bottom of sidebar)
-  - [ ] Expanded state: 240px width, icon + label visible
-  - [ ] Collapsed state: 64px width, icon only with tooltip on hover
-  - [ ] Toggle button: chevron icon at the bottom or top of sidebar
-  - [ ] Active route detection using `usePathname()` — highlight with `bg-accent text-accent-foreground` or equivalent shadcn/ui pattern
-  - [ ] Store collapse state using Zustand or `localStorage` to persist across navigation and refresh
+  - [x] Expanded state: 240px width, icon + label visible
+  - [x] Collapsed state: 64px width, icon only with tooltip on hover
+  - [x] Toggle button: chevron icon at the bottom or top of sidebar
+  - [x] Active route detection using `usePathname()` — highlight with `bg-accent text-accent-foreground` or equivalent shadcn/ui pattern
+  - [x] Store collapse state using Zustand or `localStorage` to persist across navigation and refresh
 
-- [ ] Task 3: Implement Breadcrumb component (AC: #4)
-  - [ ] Create `apps/web/src/components/layout/breadcrumbs.tsx`
-  - [ ] Auto-generate breadcrumbs from URL path segments
-  - [ ] Capitalize and de-slugify path segments (e.g., `/products` → "Products")
-  - [ ] Dynamic segments (e.g., `[id]`) should show the entity name if available, or fallback to the ID
-  - [ ] Dashboard (home) is always the first crumb; current page is non-linked last crumb
-  - [ ] Hidden on the Dashboard page itself (when path is `/`)
-  - [ ] Uses `<nav aria-label="Breadcrumb">` with `<ol>` structure per WCAG
-  - [ ] Separator character: `/` or `>` — install shadcn/ui Breadcrumb: `npx shadcn@latest add breadcrumb`
+- [x] Task 3: Implement Breadcrumb component (AC: #4)
+  - [x] Create `apps/web/src/components/layout/breadcrumbs.tsx`
+  - [x] Auto-generate breadcrumbs from URL path segments
+  - [x] Capitalize and de-slugify path segments (e.g., `/products` → "Products")
+  - [x] Dynamic segments (e.g., `[id]`) should show the entity name if available, or fallback to the ID
+  - [x] Dashboard (home) is always the first crumb; current page is non-linked last crumb
+  - [x] Hidden on the Dashboard page itself (when path is `/`)
+  - [x] Uses `<nav aria-label="Breadcrumb">` with `<ol>` structure per WCAG
+  - [x] Separator character: `/` or `>` — install shadcn/ui Breadcrumb: `npx shadcn@latest add breadcrumb`
 
-- [ ] Task 4: Responsive mobile layout (AC: #6)
-  - [ ] Below 768px breakpoint (`md`), hide the sidebar
-  - [ ] Show a bottom tab bar (`fixed bottom-0`) with 5 navigation items: Dashboard, Products, Competitors, Alerts, Reports
-  - [ ] Settings accessible via a user/hamburger menu in the header area on mobile
-  - [ ] Bottom tab bar items: icon + small label text, active state highlighted
-  - [ ] Content area uses full width on mobile (no max-width constraint)
-  - [ ] Mobile bottom bar has `z-50` and a top border for visual separation
-  - [ ] Add padding-bottom to main content on mobile to prevent bottom bar overlap
+- [x] Task 4: Responsive mobile layout (AC: #6)
+  - [x] Below 768px breakpoint (`md`), hide the sidebar
+  - [x] Show a bottom tab bar (`fixed bottom-0`) with 5 navigation items: Dashboard, Products, Competitors, Alerts, Reports
+  - [x] Settings accessible via a user/hamburger menu in the header area on mobile
+  - [x] Bottom tab bar items: icon + small label text, active state highlighted
+  - [x] Content area uses full width on mobile (no max-width constraint)
+  - [x] Mobile bottom bar has `z-50` and a top border for visual separation
+  - [x] Add padding-bottom to main content on mobile to prevent bottom bar overlap
 
-- [ ] Task 5: Keyboard accessibility and skip-to-content (AC: #7, #8)
-  - [ ] Skip-to-content link: visually hidden by default, visible on focus, links to `#main-content`
-  - [ ] Main content area has `id="main-content"` and `tabindex="-1"` for programmatic focus
-  - [ ] All sidebar nav links have visible focus rings (Tailwind `focus-visible:ring-2 focus-visible:ring-ring`)
-  - [ ] Tab order follows visual order: skip-to-content → sidebar nav items → main content
-  - [ ] Mobile bottom tab bar is also keyboard-navigable
-  - [ ] Sidebar toggle button has `aria-label` describing its action ("Collapse sidebar" / "Expand sidebar")
-  - [ ] Current nav item has `aria-current="page"` attribute
+- [x] Task 5: Keyboard accessibility and skip-to-content (AC: #7, #8)
+  - [x] Skip-to-content link: visually hidden by default, visible on focus, links to `#main-content`
+  - [x] Main content area has `id="main-content"` and `tabindex="-1"` for programmatic focus
+  - [x] All sidebar nav links have visible focus rings (Tailwind `focus-visible:ring-2 focus-visible:ring-ring`)
+  - [x] Tab order follows visual order: skip-to-content → sidebar nav items → main content
+  - [x] Mobile bottom tab bar is also keyboard-navigable
+  - [x] Sidebar toggle button has `aria-label` describing its action ("Collapse sidebar" / "Expand sidebar")
+  - [x] Current nav item has `aria-current="page"` attribute
 
-- [ ] Task 6: Create placeholder pages for all nav destinations
-  - [ ] Create route files to prevent 404s during navigation:
+- [x] Task 6: Create placeholder pages for all nav destinations
+  - [x] Create route files to prevent 404s during navigation:
     - `apps/web/src/app/(dashboard)/page.tsx` — Dashboard home
     - `apps/web/src/app/(dashboard)/products/page.tsx` — Products list placeholder
     - `apps/web/src/app/(dashboard)/competitors/page.tsx` — Competitors placeholder
     - `apps/web/src/app/(dashboard)/alerts/page.tsx` — Alerts placeholder
     - `apps/web/src/app/(dashboard)/reports/page.tsx` — Reports placeholder
     - `apps/web/src/app/(dashboard)/settings/page.tsx` — Settings placeholder
-  - [ ] Each placeholder: page title heading + "Coming soon" text
-  - [ ] These placeholders allow testing navigation without 404 errors
+  - [x] Each placeholder: page title heading + "Coming soon" text
+  - [x] These placeholders allow testing navigation without 404 errors
 
 ## Dev Notes
 
@@ -260,9 +260,53 @@ Story 1.1 establishes:
 ## Dev Agent Record
 
 ### Agent Model Used
+Claude claude-4.6-opus-high-thinking
 
 ### Debug Log References
+- Build: `npm run build` — zero errors, all 7 routes generated as static content
+- Tests: `npm test` — 27 passed, 0 failed across 5 test files
 
 ### Completion Notes List
+- Initialized Next.js 16 project with TypeScript, Tailwind CSS 4, and shadcn/ui (Story 1.1 prerequisite not yet merged)
+- Created dashboard layout with flex row structure: sidebar (left) + main content (right, max-w-[1440px], p-6)
+- Built Sidebar component with 6 nav items using Lucide icons, expanded (240px/w-60) and collapsed (64px/w-16) modes
+- Zustand persist middleware stores sidebar collapse state in localStorage
+- Tooltips appear on hover in collapsed mode using shadcn/ui Tooltip
+- Active route detection via `usePathname()` with `aria-current="page"` and `bg-accent` styling
+- Breadcrumbs auto-generated from URL path, hidden on dashboard root, with de-slugification
+- Mobile bottom tab bar (5 items, no Settings) with `fixed bottom-0 z-50` and top border
+- Skip-to-content link as first focusable element, visible on focus
+- Main content has `id="main-content"` and `tabindex="-1"` for skip navigation
+- All nav items have `focus-visible:ring-2` focus rings and respect `prefers-reduced-motion`
+- Created 6 placeholder pages under `(dashboard)` route group
+
+### Change Log
+- 2026-03-31: Implemented Story 1.2 — full app shell with sidebar, breadcrumbs, mobile nav, accessibility, and placeholder pages
 
 ### File List
+- apps/web/src/app/layout.tsx (modified — Inter font, TooltipProvider, metadata)
+- apps/web/src/app/globals.css (generated by shadcn/ui init)
+- apps/web/src/app/(dashboard)/layout.tsx (new — dashboard shell layout)
+- apps/web/src/app/(dashboard)/page.tsx (new — dashboard placeholder)
+- apps/web/src/app/(dashboard)/products/page.tsx (new — products placeholder)
+- apps/web/src/app/(dashboard)/competitors/page.tsx (new — competitors placeholder)
+- apps/web/src/app/(dashboard)/alerts/page.tsx (new — alerts placeholder)
+- apps/web/src/app/(dashboard)/reports/page.tsx (new — reports placeholder)
+- apps/web/src/app/(dashboard)/settings/page.tsx (new — settings placeholder)
+- apps/web/src/components/layout/sidebar.tsx (new — sidebar with collapse/expand)
+- apps/web/src/components/layout/breadcrumbs.tsx (new — auto-breadcrumbs from URL)
+- apps/web/src/components/layout/mobile-nav.tsx (new — mobile bottom tab bar)
+- apps/web/src/components/layout/nav-items.ts (new — shared nav item definitions)
+- apps/web/src/components/ui/tooltip.tsx (new — shadcn/ui tooltip)
+- apps/web/src/components/ui/breadcrumb.tsx (new — shadcn/ui breadcrumb)
+- apps/web/src/components/ui/button.tsx (new — shadcn/ui button)
+- apps/web/src/stores/sidebar-store.ts (new — Zustand sidebar state)
+- apps/web/src/lib/utils.ts (new — cn utility)
+- apps/web/src/__tests__/setup.ts (new — test setup)
+- apps/web/src/__tests__/sidebar.test.tsx (new — 9 sidebar tests)
+- apps/web/src/__tests__/breadcrumbs.test.tsx (new — 7 breadcrumb tests)
+- apps/web/src/__tests__/mobile-nav.test.tsx (new — 3 mobile nav tests)
+- apps/web/src/__tests__/sidebar-store.test.ts (new — 3 store tests)
+- apps/web/src/__tests__/nav-items.test.ts (new — 5 nav items tests)
+- apps/web/vitest.config.ts (new — Vitest configuration)
+- apps/web/package.json (modified — test scripts, dependencies)
