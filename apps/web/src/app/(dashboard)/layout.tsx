@@ -24,7 +24,7 @@ export default function DashboardLayout({
           tabIndex={-1}
           className="flex-1 overflow-y-auto focus:outline-none pb-16 md:pb-0"
         >
-          <div className="mx-auto max-w-[1440px] p-6">
+          <div className="mx-auto max-w-content p-6">
             <AppBreadcrumbs />
             <div className="mt-2">{children}</div>
           </div>
