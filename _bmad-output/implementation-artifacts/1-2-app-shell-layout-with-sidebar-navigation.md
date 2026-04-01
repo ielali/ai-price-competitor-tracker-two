@@ -1,6 +1,6 @@
 # Story 1.2: App Shell Layout with Sidebar Navigation
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -21,58 +21,58 @@ so that I can efficiently navigate between all sections of the application on an
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create the app shell layout at `apps/web/src/app/(dashboard)/layout.tsx` (AC: #1, #5)
-  - [ ] Create `(dashboard)` route group directory under `apps/web/src/app/`
-  - [ ] Create `layout.tsx` that wraps all protected pages with sidebar + main content area
-  - [ ] Main content area: `<main>` with `max-w-content` (1440px), `mx-auto`, and `p-6` (24px)
-  - [ ] Render `<Sidebar />` component and `<Breadcrumbs />` above main content
-  - [ ] Create placeholder `page.tsx` in `(dashboard)/` directory as the dashboard home
+- [x] Task 1: Create the app shell layout at `apps/web/src/app/(dashboard)/layout.tsx` (AC: #1, #5)
+  - [x] Create `(dashboard)` route group directory under `apps/web/src/app/`
+  - [x] Create `layout.tsx` that wraps all protected pages with sidebar + main content area
+  - [x] Main content area: `<main>` with `max-w-content` (1440px), `mx-auto`, and `p-6` (24px)
+  - [x] Render `<Sidebar />` component and `<Breadcrumbs />` above main content
+  - [x] Create placeholder `page.tsx` in `(dashboard)/` directory as the dashboard home
 
-- [ ] Task 2: Build the `<Sidebar />` component at `apps/web/src/components/layout/sidebar.tsx` (AC: #1, #2, #3)
-  - [ ] Create `apps/web/src/components/layout/` directory
-  - [ ] Implement sidebar with two states: expanded (240px, icons + labels) and collapsed (64px, icons only)
-  - [ ] Navigation items with Lucide React icons:
+- [x] Task 2: Build the `<Sidebar />` component at `apps/web/src/components/layout/sidebar.tsx` (AC: #1, #2, #3)
+  - [x] Create `apps/web/src/components/layout/` directory
+  - [x] Implement sidebar with two states: expanded (240px, icons + labels) and collapsed (64px, icons only)
+  - [x] Navigation items with Lucide React icons:
     - Dashboard → `LayoutDashboard` icon → route `/`
     - Products → `Package` icon → route `/products`
     - Competitors → `Users` icon → route `/competitors`
     - Alerts → `Bell` icon → route `/alerts`
     - Reports → `BarChart3` icon → route `/reports`
     - Settings → `Settings` icon → route `/settings` (pinned to bottom of sidebar)
-  - [ ] Collapse/expand toggle button at bottom of sidebar (above Settings on desktop)
-  - [ ] Active nav item: distinct background color + left border accent (use `bg-accent` + `border-l-2 border-primary`)
-  - [ ] Detect active route using `usePathname()` from `next/navigation`
+  - [x] Collapse/expand toggle button at bottom of sidebar (above Settings on desktop)
+  - [x] Active nav item: distinct background color + left border accent (use `bg-accent` + `border-l-2 border-primary`)
+  - [x] Detect active route using `usePathname()` from `next/navigation`
 
-- [ ] Task 3: Persist sidebar collapsed state with Zustand (AC: #2)
-  - [ ] Install Zustand: `npm install zustand` in `apps/web/`
-  - [ ] Create store at `apps/web/src/stores/sidebar-store.ts`
-  - [ ] Store shape: `{ collapsed: boolean; toggle: () => void }`
-  - [ ] Persist to `localStorage` using Zustand `persist` middleware so state survives navigation and refresh
-  - [ ] Sidebar reads from store; toggle button dispatches `toggle()`
+- [x] Task 3: Persist sidebar collapsed state with Zustand (AC: #2)
+  - [x] Install Zustand: `npm install zustand` in `apps/web/`
+  - [x] Create store at `apps/web/src/stores/sidebar-store.ts`
+  - [x] Store shape: `{ collapsed: boolean; toggle: () => void }`
+  - [x] Persist to `localStorage` using Zustand `persist` middleware so state survives navigation and refresh
+  - [x] Sidebar reads from store; toggle button dispatches `toggle()`
 
-- [ ] Task 4: Build the `<Breadcrumbs />` component at `apps/web/src/components/layout/breadcrumbs.tsx` (AC: #4)
-  - [ ] Render breadcrumb trail based on current route path segments
-  - [ ] First segment always "Dashboard" linking to `/`
-  - [ ] Subsequent segments derived from URL path (capitalize, replace hyphens with spaces)
-  - [ ] Last segment is plain text (current page, not a link)
-  - [ ] Use `<nav aria-label="Breadcrumb">` with `<ol>` for semantic markup
-  - [ ] Separator: `/` or `>` between items
-  - [ ] Hide breadcrumbs on dashboard home page (`/`)
+- [x] Task 4: Build the `<Breadcrumbs />` component at `apps/web/src/components/layout/breadcrumbs.tsx` (AC: #4)
+  - [x] Render breadcrumb trail based on current route path segments
+  - [x] First segment always "Dashboard" linking to `/`
+  - [x] Subsequent segments derived from URL path (capitalize, replace hyphens with spaces)
+  - [x] Last segment is plain text (current page, not a link)
+  - [x] Use `<nav aria-label="Breadcrumb">` with `<ol>` for semantic markup
+  - [x] Separator: `/` or `>` between items
+  - [x] Hide breadcrumbs on dashboard home page (`/`)
 
-- [ ] Task 5: Responsive mobile layout — bottom tab bar (AC: #6)
-  - [ ] On screens < 768px, hide the sidebar completely
-  - [ ] Render a fixed-bottom tab bar (`<nav>`) with 5 items: Dashboard, Products, Competitors, Alerts, Reports
-  - [ ] Settings accessible from a menu/gear icon in the mobile tab bar or top header
-  - [ ] Active tab highlighted with color accent
-  - [ ] Tab bar icons match sidebar icons; labels rendered below icons at small size
-  - [ ] Tab bar height ~56-64px; safe-area padding for notched devices (`pb-safe`)
+- [x] Task 5: Responsive mobile layout — bottom tab bar (AC: #6)
+  - [x] On screens < 768px, hide the sidebar completely
+  - [x] Render a fixed-bottom tab bar (`<nav>`) with 5 items: Dashboard, Products, Competitors, Alerts, Reports
+  - [x] Settings accessible from a menu/gear icon in the mobile tab bar or top header
+  - [x] Active tab highlighted with color accent
+  - [x] Tab bar icons match sidebar icons; labels rendered below icons at small size
+  - [x] Tab bar height ~56-64px; safe-area padding for notched devices (`pb-safe`)
 
-- [ ] Task 6: Keyboard accessibility and skip link (AC: #7, #8)
-  - [ ] Add skip-to-content link as first focusable element in the layout: `<a href="#main-content" class="sr-only focus:not-sr-only ...">Skip to content</a>`
-  - [ ] Main content area has `id="main-content"` and `tabindex="-1"` for focus target
-  - [ ] All sidebar nav items are `<a>` or Next.js `<Link>` (natively keyboard-focusable)
-  - [ ] Visible focus rings on all interactive elements: use Tailwind `focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`
-  - [ ] Tab order: skip link → sidebar nav items (top to bottom) → main content
-  - [ ] Collapsed sidebar tooltip on hover/focus showing full label (use shadcn/ui `Tooltip`)
+- [x] Task 6: Keyboard accessibility and skip link (AC: #7, #8)
+  - [x] Add skip-to-content link as first focusable element in the layout: `<a href="#main-content" class="sr-only focus:not-sr-only ...">Skip to content</a>`
+  - [x] Main content area has `id="main-content"` and `tabindex="-1"` for focus target
+  - [x] All sidebar nav items are `<a>` or Next.js `<Link>` (natively keyboard-focusable)
+  - [x] Visible focus rings on all interactive elements: use Tailwind `focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`
+  - [x] Tab order: skip link → sidebar nav items (top to bottom) → main content
+  - [x] Collapsed sidebar tooltip on hover/focus showing full label (use shadcn/ui `Tooltip`)
 
 ## Dev Notes
 
@@ -242,8 +242,48 @@ If Story 1.1 is not yet implemented, the dev agent should set up these prerequis
 
 ### Agent Model Used
 
+claude-sonnet-4-6
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- ✅ Dashboard layout created at `apps/web/src/app/(dashboard)/layout.tsx` with sidebar, breadcrumbs, skip link, and main content area
+- ✅ Sidebar component built with expanded (240px/w-60) and collapsed (64px/w-16) states; CSS transition with reduced-motion support
+- ✅ Active nav highlighting uses `bg-accent text-accent-foreground border-l-2 border-primary`
+- ✅ All 6 nav items implemented with correct Lucide React icons and routes; Settings pinned to bottom
+- ✅ Zustand store with `persist` middleware persists collapsed state to localStorage
+- ✅ Breadcrumbs component auto-generates trail from URL segments; hidden on dashboard root `/`
+- ✅ Mobile bottom tab bar (MobileNav) shows 5 items at `md:hidden`; active item highlighted
+- ✅ Skip-to-content link as first focusable element; `#main-content` with `tabindex=-1`
+- ✅ Keyboard focus rings on all nav items using `focus-visible:ring-2 focus-visible:ring-ring`
+- ✅ Collapsed sidebar shows tooltips via shadcn/ui Tooltip component
+- ✅ 27 tests passing covering all components and the Zustand store
+- ✅ `npm run build` compiles successfully; `npm run lint` passes with zero warnings
+- ✅ Placeholder pages created for all routes: `/`, `/products`, `/competitors`, `/alerts`, `/reports`, `/settings`
+
 ### File List
+
+- `apps/web/src/app/(dashboard)/layout.tsx`
+- `apps/web/src/app/(dashboard)/page.tsx`
+- `apps/web/src/app/(dashboard)/products/page.tsx`
+- `apps/web/src/app/(dashboard)/competitors/page.tsx`
+- `apps/web/src/app/(dashboard)/alerts/page.tsx`
+- `apps/web/src/app/(dashboard)/reports/page.tsx`
+- `apps/web/src/app/(dashboard)/settings/page.tsx`
+- `apps/web/src/components/layout/sidebar.tsx`
+- `apps/web/src/components/layout/breadcrumbs.tsx`
+- `apps/web/src/components/layout/mobile-nav.tsx`
+- `apps/web/src/components/layout/nav-items.ts`
+- `apps/web/src/components/ui/breadcrumb.tsx`
+- `apps/web/src/components/ui/tooltip.tsx`
+- `apps/web/src/stores/sidebar-store.ts`
+- `apps/web/tailwind.config.ts`
+- `apps/web/package.json`
+- `apps/web/src/__tests__/sidebar.test.tsx`
+- `apps/web/src/__tests__/breadcrumbs.test.tsx`
+- `apps/web/src/__tests__/mobile-nav.test.tsx`
+- `apps/web/src/__tests__/sidebar-store.test.ts`
+- `apps/web/src/__tests__/nav-items.test.ts`
+- `apps/web/src/__tests__/setup.ts`
+- `apps/web/vitest.config.ts`
