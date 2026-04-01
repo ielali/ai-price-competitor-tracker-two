@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
@@ -7,17 +6,13 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "moduleDetection": "force",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "target": "ES2022",
-    "module": "ESNext",
+    "noEmit": true,
     "moduleResolution": "bundler",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "module": "esnext",
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "jsx": "preserve",
+    "incremental": true
   },
   "exclude": ["node_modules"]
 }

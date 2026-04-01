@@ -1,5 +1,5 @@
 {
-  "name": "@price-tracker/shared",
+  "name": "@price-tracker/api",
   "version": "0.1.0",
   "private": true
 }
