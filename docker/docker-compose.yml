@@ -1,0 +1,109 @@
+version: "3.8"
+
+services:
+  # PostgreSQL 16 with TimescaleDB extension
+  postgres:
+    image: timescale/timescaledb:latest-pg16
+    container_name: pt-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: price_tracker
+      POSTGRES_PASSWORD: price_tracker
+      POSTGRES_DB: price_tracker
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U price_tracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis 7 for BullMQ job queue and caching
+  redis:
+    image: redis:7-alpine
+    container_name: pt-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Next.js frontend (port 3000)
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+    container_name: pt-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+    volumes:
+      - ../apps/web/src:/app/apps/web/src
+      - ../apps/web/public:/app/apps/web/public
+    depends_on:
+      api:
+        condition: service_started
+
+  # Fastify API server (port 4000)
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: pt-api
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - API_HOST=0.0.0.0
+      - API_PORT=4000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=price_tracker
+      - DB_USER=price_tracker
+      - DB_PASSWORD=price_tracker
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ../apps/api/src:/app/apps/api/src
+      - ../apps/api/db:/app/apps/api/db
+      - ../packages/shared/src:/app/packages/shared/src
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # BullMQ scraper worker
+  scraper:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.scraper
+    container_name: pt-scraper
+    environment:
+      - NODE_ENV=development
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=price_tracker
+      - DB_USER=price_tracker
+      - DB_PASSWORD=price_tracker
+    volumes:
+      - ../packages/scraper/src:/app/packages/scraper/src
+      - ../packages/shared/src:/app/packages/shared/src
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
