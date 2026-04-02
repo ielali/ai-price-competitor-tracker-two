@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-03-31
-last_updated: 2026-03-31T14:00:00Z
+last_updated: 2026-04-02T00:00:00Z
 project: ai-competitor-price-tracker
 project_key: NOKEY
 tracking_system: file-system
@@ -106,8 +106,8 @@ development_status:
   epic-9-retrospective: optional
 
   # Epic 10: Infrastructure & DevOps
-  epic-10: backlog
-  10-1-docker-compose-development-environment: backlog
+  epic-10: in-progress
+  10-1-docker-compose-development-environment: review
   10-2-ci-cd-pipeline: backlog
   10-3-monitoring-and-health-checks: backlog
   epic-10-retrospective: optional
