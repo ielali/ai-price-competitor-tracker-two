@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import defaultTheme from "tailwindcss/defaultTheme"
 
 const config: Config = {
   darkMode: "class",
@@ -8,7 +9,8 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    // Tailwind spacing scale uses 4px as one step (e.g. `p-1` = 0.25rem = 4px at default root font size).
+    // Explicit 4px-based spacing scale: `spacing.1` = 0.25rem = 4px when `html` font-size is 16px.
+    spacing: defaultTheme.spacing,
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
