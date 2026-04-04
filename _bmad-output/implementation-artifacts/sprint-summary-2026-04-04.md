@@ -3,6 +3,12 @@
 **Planning date:** 2026-04-04  
 **Role:** Scrum Master — sprint planning refresh and development coordination.
 
+## Session linkage (harness)
+
+- **Task:** `69999945-b8a9-4383-9645-774aa6ec9847`
+- **Story (container):** `a7221440-a9a5-4597-bbf2-639905f6f27e`
+- **Artifact:** `sprint_summary` published via bmad-harness for this planning cycle.
+
 ## Sprint objectives (near term)
 
 1. Close out **Epic 1 — Project Foundation & App Shell** by finishing work in **review** (stories 1.1 and 1.2), then advancing **1-3-authentication-and-session-management** from backlog.
@@ -43,16 +49,13 @@
 - On any story → **done**, update YAML and roll up epic status.
 - Before agent handoff, confirm the story markdown exists here if status is **ready-for-dev** or higher.
 
-## Sprint planning validation (2026-04-04, refreshed)
+## Sprint planning validation (refreshed)
 
-- **Harness:** This refresh records sprint coordination for task `215bd2fc-0f5e-4ef6-b6cb-2a94361f8bba` (story `42d7471a-fea3-49af-a3ba-f8c29965a86a`). A `sprint_summary` artifact was published via bmad-harness for the same session. Repo files under `_bmad-output/implementation-artifacts/` remain the day-to-day source of truth for developers.
 - Every epic and story in `sprint-status.yaml` matches the planned product backlog inventory (10 epics, 30 stories, 10 retrospective rows).
 - Story artifact files on disk: `1-1-initialize-nextjs-project-with-design-system.md`, `1-2-app-shell-layout-with-sidebar-navigation.md` (aligned with **review** statuses for 1.1 and 1.2).
 - No status downgrades applied; YAML remains valid and ordered epic → stories → retrospective per epic.
 
 ## SM facilitation — development workflow
-
-**Task:** `215bd2fc-0f5e-4ef6-b6cb-2a94361f8bba` · **Story:** `42d7471a-fea3-49af-a3ba-f8c29965a86a`
 
 | Area | Agreement |
 |------|-----------|
