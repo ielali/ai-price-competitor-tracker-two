@@ -1,0 +1,21 @@
+{
+  "name": "ai-competitor-price-tracker",
+  "private": true,
+  "packageManager": "npm@10.9.7",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,js,mjs,css,json,md}\" \"*.{json,md}\" \"turbo.json\""
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  }
+}
