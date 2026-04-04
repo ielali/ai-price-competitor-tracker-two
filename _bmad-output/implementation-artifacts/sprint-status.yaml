@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-03-31
-last_updated: 2026-04-01T06:40:00Z
+last_updated: 2026-04-04T04:50:00Z
 project: ai-competitor-price-tracker
 project_key: NOKEY
 tracking_system: file-system
@@ -51,8 +51,8 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: Product Management & Tracking Configuration
-  epic-2: backlog
-  2-1-product-list-view-with-filtering-and-sorting: backlog
+  epic-2: in-progress
+  2-1-product-list-view-with-filtering-and-sorting: review
   2-2-add-product-wizard-3-step-flow: backlog
   2-3-product-detail-page: backlog
   2-4-edit-and-delete-product: backlog
