@@ -1,5 +1,5 @@
 # generated: 2026-04-04
-# last_updated: 2026-04-04T14:00:00Z
+# last_updated: 2026-04-04T22:12:00Z
 # project: ai-competitor-price-tracker
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-04
-last_updated: 2026-04-04T14:00:00Z
+last_updated: 2026-04-04T22:12:00Z
 project: ai-competitor-price-tracker
 project_key: NOKEY
 tracking_system: file-system
@@ -94,7 +94,7 @@ development_status:
 
   # Epic 8: Dashboard & Reporting
   epic-8: backlog
-  8-1-dashboard-home-page: backlog
+  8-1-dashboard-home-page: review
   8-2-reports-center: backlog
   8-3-first-time-user-onboarding: backlog
   epic-8-retrospective: optional
