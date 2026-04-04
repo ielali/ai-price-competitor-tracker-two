@@ -8,6 +8,16 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/__tests__/setup.ts"],
     globals: true,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json-summary"],
+      include: [
+        "src/lib/validate-demo-credentials.ts",
+        "src/lib/safe-relative-path.ts",
+        "src/components/layout/sidebar.tsx",
+        "src/**/login-form.tsx",
+      ],
+    },
   },
   resolve: {
     alias: {

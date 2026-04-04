@@ -4,6 +4,11 @@ import { Sidebar } from "@/components/layout/sidebar";
 
 let mockPathname = "/";
 
+vi.mock("next-auth/react", () => ({
+  useSession: () => ({ data: null, status: "unauthenticated" as const }),
+  signOut: vi.fn(),
+}));
+
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
 }));
