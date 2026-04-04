@@ -42,3 +42,17 @@
 
 - On any story → **done**, update YAML and roll up epic status.
 - Before agent handoff, confirm the story markdown exists here if status is **ready-for-dev** or higher.
+
+## SM facilitation — development workflow
+
+**Task:** `4da6a42c-9152-418c-8811-84195e11ef38` · **Story:** `a94e7d2a-4b22-4b10-8bc6-b3a0b238b465`
+
+| Area | Agreement |
+|------|-----------|
+| **Source of truth** | `sprint-status.yaml` — never downgrade a status; refresh from epic inventory when new story keys appear. |
+| **Review queue** | Two stories in **review** (1.1, 1.2): complete acceptance review first; dev can prep 1.3 context in parallel if capacity allows. |
+| **Story lifecycle** | `backlog` → (create `*.md` artifact) → `ready-for-dev` → `in-progress` → `review` → `done`. |
+| **Epic rollup** | `epic-1` stays **in-progress** until 1.1–1.4 are all **done**; then optional `epic-1-retrospective`. |
+| **Handoff checklist** | Story key in YAML matches filename; acceptance criteria in the story doc; status matches actual work. |
+
+**Immediate sequence:** Finish **review** for 1.1 and 1.2 → **done** → create or open **1-3-authentication-and-session-management** for **ready-for-dev** / **in-progress** → keep Epic 2–10 in **backlog** until Epic 1 stabilizes.
