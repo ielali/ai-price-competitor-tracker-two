@@ -1,10 +1,5 @@
+import { AlertRuleBuilder } from "@/components/alerts/alert-rule-builder";
+
 export default function AlertsPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold tracking-tight">Alerts</h1>
-      <p className="mt-2 text-muted-foreground">
-        Alert configuration coming soon.
-      </p>
-    </div>
-  );
+  return <AlertRuleBuilder />;
 }
