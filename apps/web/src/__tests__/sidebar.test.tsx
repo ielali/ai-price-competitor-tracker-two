@@ -4,8 +4,12 @@ import { Sidebar } from "@/components/layout/sidebar";
 
 let mockPathname = "/";
 
+const mockPush = vi.fn();
+const mockRefresh = vi.fn();
+
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ push: mockPush, refresh: mockRefresh }),
 }));
 
 vi.mock("next/link", () => ({
@@ -63,6 +67,17 @@ describe("Sidebar", () => {
     mockPathname = "/";
     mockCollapsed = false;
     mockToggle.mockClear();
+  });
+
+  it("shows user email when expanded", () => {
+    render(<Sidebar userEmail="ada@example.com" />);
+    expect(screen.getByText("ada@example.com")).toBeInTheDocument();
+  });
+
+  it("hides user email when collapsed", () => {
+    mockCollapsed = true;
+    render(<Sidebar userEmail="ada@example.com" />);
+    expect(screen.queryByText("ada@example.com")).not.toBeInTheDocument();
   });
 
   it("renders all main navigation items", () => {

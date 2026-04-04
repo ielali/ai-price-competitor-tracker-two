@@ -1,3 +1,5 @@
+import { SignOutButton } from "@/components/layout/sign-out-button";
+
 export default function SettingsPage() {
   return (
     <div>
@@ -5,6 +7,7 @@ export default function SettingsPage() {
       <p className="mt-2 text-muted-foreground">
         Application settings coming soon.
       </p>
+      <SignOutButton />
     </div>
   );
 }

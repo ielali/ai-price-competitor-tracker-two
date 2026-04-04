@@ -1,12 +1,16 @@
 import { Sidebar } from "@/components/layout/sidebar";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { AppBreadcrumbs } from "@/components/layout/breadcrumbs";
+import { getSessionFromCookies } from "@/lib/auth/session";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getSessionFromCookies();
+  const userEmail = session?.email ?? "";
+
   return (
     <>
       <a
@@ -17,7 +21,7 @@ export default function DashboardLayout({
       </a>
 
       <div className="flex h-screen overflow-hidden">
-        <Sidebar />
+        <Sidebar userEmail={userEmail} />
 
         <main
           id="main-content"

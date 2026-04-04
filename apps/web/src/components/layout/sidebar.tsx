@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/tooltip";
 import { useSidebarStore } from "@/stores/sidebar-store";
 import { mainNavItems, bottomNavItem } from "./nav-items";
+import { LogoutControl } from "./logout-control";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
 }
 
-export function Sidebar() {
+export function Sidebar({ userEmail = "" }: { userEmail?: string }) {
   const { collapsed, toggle } = useSidebarStore();
   const pathname = usePathname();
 
@@ -94,9 +95,21 @@ export function Sidebar() {
                   {bottomNavItem.label}
                 </TooltipContent>
               )}
-            </Tooltip>
-          </li>
-        </ul>
+              </Tooltip>
+            </li>
+
+            {!collapsed && userEmail ? (
+              <li
+                className="px-3 py-2 text-xs font-medium text-muted-foreground truncate"
+                title={userEmail}
+              >
+                {userEmail}
+              </li>
+            ) : null}
+            <li>
+              <LogoutControl collapsed={collapsed} />
+            </li>
+          </ul>
       </nav>
 
       <div className="border-t border-border px-2 py-2">
