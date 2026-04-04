@@ -4,6 +4,16 @@ import { Sidebar } from "@/components/layout/sidebar";
 
 let mockPathname = "/";
 
+vi.mock("next-auth/react", () => ({
+  useSession: () => ({
+    data: {
+      user: { name: "Test User", email: "test@example.com", id: "1" },
+    },
+    status: "authenticated",
+  }),
+  signOut: vi.fn(),
+}));
+
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
 }));
@@ -129,6 +139,11 @@ describe("Sidebar", () => {
       const span = link.querySelector("span");
       expect(span).toBeNull();
     }
+  });
+
+  it("shows the signed-in user's email when the sidebar is expanded", () => {
+    render(<Sidebar />);
+    expect(screen.getByText("test@example.com")).toBeInTheDocument();
   });
 
   it("has correct nav item links", () => {

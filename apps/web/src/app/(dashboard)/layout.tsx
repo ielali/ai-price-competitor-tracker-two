@@ -1,6 +1,8 @@
 import { Sidebar } from "@/components/layout/sidebar";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { AppBreadcrumbs } from "@/components/layout/breadcrumbs";
+import { CommandPalette } from "@/components/layout/command-palette";
+import { CommandPaletteTrigger } from "@/components/layout/command-palette-trigger";
 
 export default function DashboardLayout({
   children,
@@ -25,13 +27,19 @@ export default function DashboardLayout({
           className="flex-1 overflow-y-auto focus:outline-none pb-16 md:pb-0"
         >
           <div className="mx-auto max-w-content p-6">
-            <AppBreadcrumbs />
-            <div className="mt-2">{children}</div>
+            <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0 flex-1">
+                <AppBreadcrumbs />
+              </div>
+              <CommandPaletteTrigger className="shrink-0 self-start sm:self-center" />
+            </div>
+            {children}
           </div>
         </main>
       </div>
 
       <MobileNav />
+      <CommandPalette />
     </>
   );
 }
