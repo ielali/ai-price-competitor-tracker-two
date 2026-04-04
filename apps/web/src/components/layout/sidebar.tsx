@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Tooltip,
@@ -18,6 +19,7 @@ function isActivePath(pathname: string, href: string) {
 }
 
 export function Sidebar() {
+  const { data: session } = useSession();
   const { collapsed, toggle } = useSidebarStore();
   const pathname = usePathname();
 
@@ -98,6 +100,41 @@ export function Sidebar() {
           </li>
         </ul>
       </nav>
+
+      <div className="border-t border-border space-y-1 px-2 py-2">
+        {session?.user?.email && !collapsed && (
+          <p
+            className="text-muted-foreground truncate px-3 py-1 text-xs"
+            title={session.user.email ?? undefined}
+          >
+            {session.user.email}
+          </p>
+        )}
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className={cn(
+                  "text-muted-foreground flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "hover:bg-accent/50 hover:text-accent-foreground",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                )}
+              />
+            }
+          >
+            <LogOut className="size-5 shrink-0" />
+            {!collapsed && <span>Sign out</span>}
+          </TooltipTrigger>
+          {collapsed && (
+            <TooltipContent side="right">
+              Sign out
+              {session?.user?.email ? ` — ${session.user.email}` : ""}
+            </TooltipContent>
+          )}
+        </Tooltip>
+      </div>
 
       <div className="border-t border-border px-2 py-2">
         <button
