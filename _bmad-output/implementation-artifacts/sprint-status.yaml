@@ -88,7 +88,7 @@ development_status:
   # Epic 7: Alerting & Notifications
   epic-7: backlog
   7-1-alert-rule-builder: backlog
-  7-2-notification-delivery-email-slack-webhook: backlog
+  7-2-notification-delivery-email-slack-webhook: review
   7-3-alert-history-and-activity-log: backlog
   epic-7-retrospective: optional
 
