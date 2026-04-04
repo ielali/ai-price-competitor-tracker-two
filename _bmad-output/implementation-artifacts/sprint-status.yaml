@@ -65,9 +65,9 @@ development_status:
   epic-3-retrospective: optional
 
   # Epic 4: Automated Scraping Engine (Backend)
-  epic-4: backlog
+  epic-4: in-progress
   4-1-scraping-job-scheduler-and-queue: backlog
-  4-2-price-data-extraction-and-normalization: backlog
+  4-2-price-data-extraction-and-normalization: review
   4-3-scraping-status-dashboard-integration: backlog
   epic-4-retrospective: optional
 
