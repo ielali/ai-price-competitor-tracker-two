@@ -5,8 +5,8 @@
 
 ## Session linkage (harness)
 
-- **Task:** `18f7bb2b-5537-4e4e-b154-7e8c184fc9dd`
-- **Story (container):** `25b4b597-ad22-4c00-a15f-c948840dfd92`
+- **Task:** `25901e19-11c1-4e53-8df3-79a6733dd116`
+- **Story (container):** `95985f88-0f89-4d8d-ae06-937243b86b64`
 - **Artifact:** `sprint_summary` published via bmad-harness for this Scrum Master planning cycle (2026-04-04 refresh).
 
 ## Sprint objectives (near term)
