@@ -1,3 +1,5 @@
+import { SignOutSection } from './sign-out-section';
+
 export default function SettingsPage() {
   return (
     <div>
@@ -5,6 +7,7 @@ export default function SettingsPage() {
       <p className="mt-2 text-muted-foreground">
         Application settings coming soon.
       </p>
+      <SignOutSection />
     </div>
   );
 }

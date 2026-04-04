@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useSidebarStore } from "@/stores/sidebar-store";
 import { mainNavItems, bottomNavItem } from "./nav-items";
+import { SidebarUser } from "./sidebar-user";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -98,6 +99,8 @@ export function Sidebar() {
           </li>
         </ul>
       </nav>
+
+      <SidebarUser collapsed={collapsed} />
 
       <div className="border-t border-border px-2 py-2">
         <button
