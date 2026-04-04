@@ -43,9 +43,15 @@
 - On any story → **done**, update YAML and roll up epic status.
 - Before agent handoff, confirm the story markdown exists here if status is **ready-for-dev** or higher.
 
+## Sprint planning validation (2026-04-04)
+
+- Every epic and story in `sprint-status.yaml` matches the planned product backlog inventory (10 epics, 30 stories, 10 retrospective rows).
+- Story artifact files on disk: `1-1-initialize-nextjs-project-with-design-system.md`, `1-2-app-shell-layout-with-sidebar-navigation.md` (aligned with **review** statuses for 1.1 and 1.2).
+- No status downgrades applied; YAML remains valid and ordered epic → stories → retrospective per epic.
+
 ## SM facilitation — development workflow
 
-**Task:** `4da6a42c-9152-418c-8811-84195e11ef38` · **Story:** `a94e7d2a-4b22-4b10-8bc6-b3a0b238b465`
+**Task:** `f444c741-c042-4f45-a223-a016fb19c3ca` · **Story:** `e96311e6-d898-4739-a777-6c56e2ea1db9`
 
 | Area | Agreement |
 |------|-----------|
