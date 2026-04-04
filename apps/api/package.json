@@ -1,5 +1,22 @@
 {
   "name": "@price-tracker/api",
   "version": "0.1.0",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "node --watch dist/index.js",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "lint": "echo \"api: no lint configured\""
+  },
+  "dependencies": {
+    "@price-tracker/scraper": "*",
+    "fastify": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5.7.3",
+    "vitest": "^4.1.2"
+  }
 }
