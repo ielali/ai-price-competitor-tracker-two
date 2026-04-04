@@ -1,8 +1,21 @@
 "use client";
 
+import * as React from "react";
 import { Search } from "lucide-react";
 import { useCommandPaletteStore } from "@/stores/command-palette-store";
 import { cn } from "@/lib/utils";
+
+function useModifierKeyLabel() {
+  const [label, setLabel] = React.useState("Ctrl");
+
+  React.useEffect(() => {
+    setLabel(
+      /Mac|iPhone|iPod|iPad/i.test(navigator.userAgent) ? "⌘" : "Ctrl"
+    );
+  }, []);
+
+  return label;
+}
 
 export function CommandPaletteTrigger({
   className,
@@ -10,6 +23,7 @@ export function CommandPaletteTrigger({
   className?: string;
 }) {
   const setOpen = useCommandPaletteStore((s) => s.setOpen);
+  const modKey = useModifierKeyLabel();
 
   return (
     <button
@@ -27,7 +41,8 @@ export function CommandPaletteTrigger({
       <span className="hidden sm:inline">Search</span>
       <kbd className="pointer-events-none hidden rounded border bg-muted px-1.5 font-mono text-[10px] font-medium sm:inline">
         <span className="sr-only">Keyboard shortcut: </span>
-        <span aria-hidden>⌘</span>K
+        <span aria-hidden>{modKey}</span>
+        <span aria-hidden>+K</span>
       </kbd>
     </button>
   );
