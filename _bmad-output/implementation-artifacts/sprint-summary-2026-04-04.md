@@ -5,8 +5,8 @@
 
 ## Session linkage (harness)
 
-- **Task:** `4c67d62a-a6d9-45e9-aa60-e3797829b4d9`
-- **Story (container):** `8503a241-456e-4f60-98b1-f1717f6464bb`
+- **Task:** `16e05aa2-28aa-44ec-847b-3e192922e51f`
+- **Story:** `ai-competitor-price-tracker-impl-retro-shell`
 - **Artifact:** `sprint_summary` published via bmad-harness for this Scrum Master planning cycle (2026-04-04 coordination refresh).
 
 ## Sprint objectives (near term)
@@ -66,3 +66,7 @@
 | **Handoff checklist** | Story key in YAML matches filename; acceptance criteria in the story doc; status matches actual work. |
 
 **Immediate sequence:** Finish **review** for 1.1 and 1.2 → **done** → create or open **1-3-authentication-and-session-management** for **ready-for-dev** / **in-progress** → keep Epic 2–10 in **backlog** until Epic 1 stabilizes.
+
+## Compliance note (this session)
+
+- **Secret scan:** `gitleaks` is not installed in this environment (GitHub releases egress blocked). A high-signal pattern scan (AWS-style keys, PEM private keys, `ghp_`/`sk_live_`/Slack token shapes) was run across `stories/ai-competitor-price-tracker-impl-retro-shell` with **no matches**.
