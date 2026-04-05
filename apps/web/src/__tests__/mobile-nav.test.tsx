@@ -6,6 +6,8 @@ let mockPathname = "/";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 vi.mock("next/link", () => ({
@@ -22,6 +24,11 @@ vi.mock("next/link", () => ({
       {children}
     </a>
   ),
+}));
+
+vi.mock("@/stores/alert-history-store", () => ({
+  useAlertHistoryStore: (selector: (s: { entries: [] }) => unknown) =>
+    selector({ entries: [] }),
 }));
 
 describe("MobileNav", () => {

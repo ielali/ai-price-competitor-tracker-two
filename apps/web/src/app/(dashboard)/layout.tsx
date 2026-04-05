@@ -2,6 +2,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { MobileHeader } from "@/components/layout/mobile-header";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { AppBreadcrumbs } from "@/components/layout/breadcrumbs";
+import { CommandPalette } from "@/components/layout/command-palette";
 
 export default function DashboardLayout({
   children,
@@ -35,6 +36,7 @@ export default function DashboardLayout({
       </div>
 
       <MobileNav />
+      <CommandPalette />
     </>
   );
 }

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useAlertHistoryStore } from "@/stores/alert-history-store";
+import { countUnreadAlerts } from "@/lib/alert-history-filters";
 import { mainNavItems } from "./nav-items";
 
 function isActivePath(pathname: string, href: string) {
@@ -12,6 +14,9 @@ function isActivePath(pathname: string, href: string) {
 
 export function MobileNav() {
   const pathname = usePathname();
+  const unreadAlerts = useAlertHistoryStore((s) =>
+    countUnreadAlerts(s.entries)
+  );
 
   return (
     <nav
@@ -36,7 +41,17 @@ export function MobileNav() {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <Icon className="size-5" />
+                <span className="relative inline-flex">
+                  <Icon className="size-5" />
+                  {item.href === "/alerts" && unreadAlerts > 0 ? (
+                    <span
+                      className="absolute -right-2 -top-1 flex min-w-4 justify-center rounded-full bg-primary px-1 text-[9px] font-semibold leading-4 text-primary-foreground"
+                      aria-label={`${unreadAlerts} unread alerts`}
+                    >
+                      {unreadAlerts > 99 ? "99+" : unreadAlerts}
+                    </span>
+                  ) : null}
+                </span>
                 <span>{item.label}</span>
               </Link>
             </li>
