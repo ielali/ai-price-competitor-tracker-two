@@ -1,5 +1,5 @@
 # generated: 2026-04-04
-# last_updated: 2026-04-04T03:15:43Z
+# last_updated: 2026-04-05T06:05:00Z
 # project: ai-competitor-price-tracker
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-04
-last_updated: 2026-04-04T03:15:43Z
+last_updated: 2026-04-05T06:05:00Z
 project: ai-competitor-price-tracker
 project_key: NOKEY
 tracking_system: file-system
@@ -86,10 +86,10 @@ development_status:
   epic-6-retrospective: optional
 
   # Epic 7: Alerting & Notifications
-  epic-7: backlog
+  epic-7: in-progress
   7-1-alert-rule-builder: backlog
   7-2-notification-delivery-email-slack-webhook: backlog
-  7-3-alert-history-and-activity-log: backlog
+  7-3-alert-history-and-activity-log: review
   epic-7-retrospective: optional
 
   # Epic 8: Dashboard & Reporting
