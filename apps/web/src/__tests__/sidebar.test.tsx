@@ -6,6 +6,8 @@ let mockPathname = "/";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 vi.mock("next/link", () => ({
@@ -56,6 +58,11 @@ vi.mock("@/stores/sidebar-store", () => ({
     collapsed: mockCollapsed,
     toggle: mockToggle,
   }),
+}));
+
+vi.mock("@/stores/alert-history-store", () => ({
+  useAlertHistoryStore: (selector: (s: { entries: [] }) => unknown) =>
+    selector({ entries: [] }),
 }));
 
 describe("Sidebar", () => {
@@ -124,11 +131,7 @@ describe("Sidebar", () => {
   it("hides inline labels when collapsed (labels only in tooltips)", () => {
     mockCollapsed = true;
     render(<Sidebar />);
-    const links = screen.getAllByRole("link");
-    for (const link of links) {
-      const span = link.querySelector("span");
-      expect(span).toBeNull();
-    }
+    expect(document.querySelector("[data-nav-label]")).toBeNull();
   });
 
   it("has correct nav item links", () => {

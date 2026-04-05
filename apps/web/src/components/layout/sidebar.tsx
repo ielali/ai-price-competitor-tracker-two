@@ -10,7 +10,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useSidebarStore } from "@/stores/sidebar-store";
+import { useAlertHistoryStore } from "@/stores/alert-history-store";
+import { countUnreadAlerts } from "@/lib/alert-history-filters";
 import { mainNavItems, bottomNavItem } from "./nav-items";
+import { LogoutButton } from "@/components/auth/logout-button";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -20,6 +23,9 @@ function isActivePath(pathname: string, href: string) {
 export function Sidebar() {
   const { collapsed, toggle } = useSidebarStore();
   const pathname = usePathname();
+  const unreadAlerts = useAlertHistoryStore((s) =>
+    countUnreadAlerts(s.entries)
+  );
 
   return (
     <aside
@@ -52,8 +58,20 @@ export function Sidebar() {
                       />
                     }
                   >
-                    <Icon className="size-5 shrink-0" />
-                    {!collapsed && <span>{item.label}</span>}
+                    <span className="relative inline-flex shrink-0">
+                      <Icon className="size-5" />
+                      {item.href === "/alerts" && unreadAlerts > 0 ? (
+                        <span
+                          className="absolute -right-2 -top-1 flex min-w-4 justify-center rounded-full bg-primary px-1 text-[10px] font-semibold leading-4 text-primary-foreground"
+                          aria-label={`${unreadAlerts} unread alerts`}
+                        >
+                          {unreadAlerts > 99 ? "99+" : unreadAlerts}
+                        </span>
+                      ) : null}
+                    </span>
+                    {!collapsed && (
+                      <span data-nav-label>{item.label}</span>
+                    )}
                   </TooltipTrigger>
                   {collapsed && (
                     <TooltipContent side="right">
@@ -87,7 +105,9 @@ export function Sidebar() {
                 }
               >
                 <bottomNavItem.icon className="size-5 shrink-0" />
-                {!collapsed && <span>{bottomNavItem.label}</span>}
+                {!collapsed && (
+                  <span data-nav-label>{bottomNavItem.label}</span>
+                )}
               </TooltipTrigger>
               {collapsed && (
                 <TooltipContent side="right">
@@ -95,6 +115,10 @@ export function Sidebar() {
                 </TooltipContent>
               )}
             </Tooltip>
+          </li>
+
+          <li className="mt-1">
+            <LogoutButton layout="nav-row" sidebarCollapsed={collapsed} />
           </li>
         </ul>
       </nav>
