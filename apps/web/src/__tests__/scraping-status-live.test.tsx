@@ -26,6 +26,18 @@ describe("ScrapingStatusLive", () => {
     vi.unstubAllGlobals();
   });
 
+  it("shows a loading skeleton before the first successful response", () => {
+    vi.mocked(fetch).mockImplementation(
+      () => new Promise(() => {}),
+    );
+
+    render(<ScrapingStatusLive />);
+
+    expect(
+      screen.getByRole("region", { name: /scraping activity loading/i }),
+    ).toBeInTheDocument();
+  });
+
   it("loads scraping status from /api/scraping/status", async () => {
     vi.mocked(fetch).mockResolvedValue({
       ok: true,
