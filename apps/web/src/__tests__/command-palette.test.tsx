@@ -35,6 +35,9 @@ describe("CommandPalette", () => {
     expect(await screen.findByPlaceholderText("Search pages and go…")).toBeInTheDocument();
     expect(screen.getByText("Dashboard")).toBeInTheDocument();
     expect(screen.getByText("Products")).toBeInTheDocument();
+    expect(screen.getByText("Competitors")).toBeInTheDocument();
+    expect(screen.getByText("Alerts")).toBeInTheDocument();
+    expect(screen.getByText("Reports")).toBeInTheDocument();
     expect(screen.getByText("Settings")).toBeInTheDocument();
 
     await user.keyboard("{Escape}");
@@ -79,6 +82,25 @@ describe("CommandPalette", () => {
     await user.click(await screen.findByText("Alerts"));
 
     expect(mockPush).toHaveBeenCalledWith("/alerts");
+    await waitFor(() =>
+      expect(screen.queryByPlaceholderText("Search pages and go…")).not.toBeInTheDocument(),
+    );
+  });
+
+  it("navigates via keyboard when an item is selected and Enter is pressed", async () => {
+    const user = userEvent.setup();
+    render(<CommandPalette />);
+
+    pressTogglePalette(document.body);
+
+    const input = await screen.findByPlaceholderText("Search pages and go…");
+    await user.type(input, "rep");
+
+    expect(screen.getByText("Reports")).toBeInTheDocument();
+
+    await user.keyboard("{Enter}");
+
+    expect(mockPush).toHaveBeenCalledWith("/reports");
     await waitFor(() =>
       expect(screen.queryByPlaceholderText("Search pages and go…")).not.toBeInTheDocument(),
     );
