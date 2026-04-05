@@ -1,10 +1,23 @@
+import { Suspense } from "react";
+
+import { ScrapingStatusPanel } from "@/components/dashboard/scraping-status-panel";
+import { ScrapingStatusSkeleton } from "@/components/dashboard/scraping-status-skeleton";
+
 export default function DashboardPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-      <p className="mt-2 text-muted-foreground">
-        Welcome to the AI Competitor Price Tracker. Your dashboard overview will appear here.
-      </p>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <p className="mt-2 text-muted-foreground">
+          Welcome to the AI Competitor Price Tracker. A live scraping overview
+          appears below; configure sources under Competitors when you are ready
+          to run jobs against real targets.
+        </p>
+      </div>
+
+      <Suspense fallback={<ScrapingStatusSkeleton />}>
+        <ScrapingStatusPanel />
+      </Suspense>
     </div>
   );
 }
