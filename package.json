@@ -11,8 +11,17 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+<<<<<<< ours
+<<<<<<< ours
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "test": "turbo run test"
+=======
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\""
+>>>>>>> theirs
+=======
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "test": "turbo run test"
+>>>>>>> theirs
   },
   "devDependencies": {
     "turbo": "^2"

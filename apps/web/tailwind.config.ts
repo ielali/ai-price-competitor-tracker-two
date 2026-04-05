@@ -48,9 +48,18 @@ const config: Config = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+<<<<<<< ours
+<<<<<<< ours
       maxWidth: {
         content: '1440px',
       },
+=======
+>>>>>>> theirs
+=======
+      maxWidth: {
+        content: '1440px',
+      },
+>>>>>>> theirs
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

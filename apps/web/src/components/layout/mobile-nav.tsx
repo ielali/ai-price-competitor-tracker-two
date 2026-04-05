@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+<<<<<<< ours
 import { useAlertHistoryStore } from "@/stores/alert-history-store";
 import { countUnreadAlerts } from "@/lib/alert-history-filters";
+=======
+>>>>>>> theirs
 import { mainNavItems } from "./nav-items";
 
 function isActivePath(pathname: string, href: string) {
@@ -14,14 +17,25 @@ function isActivePath(pathname: string, href: string) {
 
 export function MobileNav() {
   const pathname = usePathname();
+<<<<<<< ours
   const unreadAlerts = useAlertHistoryStore((s) =>
     countUnreadAlerts(s.entries)
   );
+=======
+>>>>>>> theirs
 
   return (
     <nav
       aria-label="Mobile navigation"
+<<<<<<< ours
+<<<<<<< ours
       className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card pb-[env(safe-area-inset-bottom)]"
+=======
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card"
+>>>>>>> theirs
+=======
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card pb-[env(safe-area-inset-bottom)]"
+>>>>>>> theirs
     >
       <ul className="flex items-center justify-around">
         {mainNavItems.map((item) => {
@@ -41,6 +55,7 @@ export function MobileNav() {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
+<<<<<<< ours
                 <span className="relative inline-flex">
                   <Icon className="size-5" />
                   {item.href === "/alerts" && unreadAlerts > 0 ? (
@@ -52,6 +67,9 @@ export function MobileNav() {
                     </span>
                   ) : null}
                 </span>
+=======
+                <Icon className="size-5" />
+>>>>>>> theirs
                 <span>{item.label}</span>
               </Link>
             </li>

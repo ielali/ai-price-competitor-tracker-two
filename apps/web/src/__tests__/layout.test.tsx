@@ -1,3 +1,4 @@
+import type { ReactElement, ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import DashboardLayout from "@/app/(dashboard)/layout";
@@ -53,6 +54,20 @@ vi.mock("@/stores/sidebar-store", () => ({
   }),
 }));
 
+vi.mock("next-auth/react", () => ({
+  useSession: () => ({
+    data: { user: { email: "user@example.com", id: "user@example.com" } },
+    status: "authenticated",
+  }),
+  signOut: vi.fn(),
+}));
+
+vi.mock("@/auth", () => ({
+  auth: vi.fn().mockResolvedValue({
+    user: { email: "user@example.com", id: "user@example.com" },
+  }),
+}));
+
 vi.mock("@/components/ui/breadcrumb", () => ({
   Breadcrumb: ({ children, ...props }: React.ComponentProps<"nav">) => (
     <nav aria-label="Breadcrumb" {...props}>
@@ -88,78 +103,57 @@ vi.mock("@/components/ui/breadcrumb", () => ({
 }));
 
 describe("DashboardLayout", () => {
-  it("renders skip-to-content link as first focusable element", () => {
-    render(
-      <DashboardLayout>
-        <div>Page content</div>
-      </DashboardLayout>
-    );
+  async function renderDashboard(children: ReactNode) {
+    const ui = await DashboardLayout({ children });
+    render(ui as ReactElement);
+  }
+
+  it("renders skip-to-content link as first focusable element", async () => {
+    await renderDashboard(<div>Page content</div>);
     const skipLink = screen.getByText("Skip to content");
     expect(skipLink).toBeInTheDocument();
     expect(skipLink).toHaveAttribute("href", "#main-content");
     expect(skipLink.tagName).toBe("A");
   });
 
-  it("renders main content area with correct id and tabindex", () => {
-    render(
-      <DashboardLayout>
-        <div>Page content</div>
-      </DashboardLayout>
-    );
+  it("renders main content area with correct id and tabindex", async () => {
+    await renderDashboard(<div>Page content</div>);
     const main = screen.getByRole("main");
     expect(main).toHaveAttribute("id", "main-content");
     expect(main).toHaveAttribute("tabindex", "-1");
   });
 
-  it("renders children inside the content area", () => {
-    render(
-      <DashboardLayout>
-        <div data-testid="child">Hello world</div>
-      </DashboardLayout>
+  it("renders children inside the content area", async () => {
+    await renderDashboard(
+      <div data-testid="child">Hello world</div>,
     );
     expect(screen.getByTestId("child")).toBeInTheDocument();
     expect(screen.getByText("Hello world")).toBeInTheDocument();
   });
 
-  it("renders sidebar component", () => {
-    render(
-      <DashboardLayout>
-        <div>Page content</div>
-      </DashboardLayout>
-    );
+  it("renders sidebar component", async () => {
+    await renderDashboard(<div>Page content</div>);
     expect(
-      screen.getByRole("navigation", { name: "Main navigation" })
+      screen.getByRole("navigation", { name: "Main navigation" }),
     ).toBeInTheDocument();
   });
 
-  it("renders mobile navigation", () => {
-    render(
-      <DashboardLayout>
-        <div>Page content</div>
-      </DashboardLayout>
-    );
+  it("renders mobile navigation", async () => {
+    await renderDashboard(<div>Page content</div>);
     expect(
-      screen.getByRole("navigation", { name: "Mobile navigation" })
+      screen.getByRole("navigation", { name: "Mobile navigation" }),
     ).toBeInTheDocument();
   });
 
-  it("renders breadcrumbs for non-root pages", () => {
-    render(
-      <DashboardLayout>
-        <div>Page content</div>
-      </DashboardLayout>
-    );
+  it("renders breadcrumbs for non-root pages", async () => {
+    await renderDashboard(<div>Page content</div>);
     expect(
-      screen.getByRole("navigation", { name: "Breadcrumb" })
+      screen.getByRole("navigation", { name: "Breadcrumb" }),
     ).toBeInTheDocument();
   });
 
-  it("content area has max-width container with p-6 padding", () => {
-    render(
-      <DashboardLayout>
-        <div data-testid="child">Page content</div>
-      </DashboardLayout>
-    );
+  it("content area has max-width container with p-6 padding", async () => {
+    await renderDashboard(<div data-testid="child">Page content</div>);
     const main = screen.getByRole("main");
     const container = main.firstElementChild;
     expect(container).toHaveClass("mx-auto", "max-w-content", "p-6");

@@ -1,0 +1,134 @@
+[
+  {
+    "location": "apps/web/package.json:11-22",
+    "trigger_condition": "Web app imports from @price-tracker/shared but @price-tracker/shared is NOT listed as a dependency in apps/web/package.json. The transpilePackages setting in next.config.mjs references it, creating a phantom dependency.",
+    "guard_snippet": "Add to apps/web/package.json dependencies: \"@price-tracker/shared\": \"*\"",
+    "potential_consequence": "CRITICAL: npm workspace resolution currently works implicitly, but any non-Next.js consumer of this package, or a future migration to pnpm/yarn PnP, will fail to resolve @price-tracker/shared. Turbo's package graph also cannot detect this dependency, meaning turbo run build may not build shared before web."
+  },
+  {
+    "location": "tsconfig.base.json:1",
+    "trigger_condition": "The $schema field is set to 'https://json-schema.org/draft/2020-12/schema' which is the JSON Schema meta-specification, not the TypeScript configuration schema.",
+    "guard_snippet": "Change $schema to: \"https://json.schemastore.org/tsconfig\"",
+    "potential_consequence": "WARNING: IDEs (VS Code, WebStorm) that use the $schema field for IntelliSense will not provide tsconfig-specific autocompletion, validation, or hover docs. Developers will not get warnings for invalid compilerOptions keys."
+  },
+  {
+    "location": "packages/shared/package.json:6-7",
+    "trigger_condition": "The 'main' and 'types' fields both point to './src/index.ts' (raw TypeScript source), while the build script runs 'tsc --build' outputting to './dist'. The dist output is never referenced.",
+    "guard_snippet": "Either: (a) Add \"exports\" field: { \".\": { \"import\": \"./dist/index.mjs\", \"require\": \"./dist/index.js\", \"types\": \"./dist/index.d.ts\" } } or (b) Change main to './dist/index.js' and types to './dist/index.d.ts' and keep source access via transpilePackages",
+    "potential_consequence": "WARNING: The tsc --build step produces dist/ artifacts that nothing consumes. Any non-Next.js consumer (a CLI tool, a test runner, a future API server) importing @price-tracker/shared will receive raw .ts files which will fail to parse without a TypeScript loader. The build step is effectively dead code."
+  },
+  {
+    "location": "apps/web/src/app/globals.css:29-49",
+    "trigger_condition": "The .dark block does not define --radius, while :root defines --radius: 0.5rem. If a future dark mode requires a different border radius (common in high-contrast dark themes), there is no override point.",
+    "guard_snippet": "Add --radius: 0.5rem; to the .dark block to make it explicitly overridable",
+    "potential_consequence": "LOW: Currently not a bug because the :root value cascades. But this is an incomplete dark mode token set -- every other variable has a dark override except --radius. A developer adding dark mode radius changes will have to discover this gap."
+  },
+  {
+    "location": "apps/web/src/app/layout.tsx:17-18",
+    "trigger_condition": "The <html> element lacks suppressHydrationWarning={true}. When a dark mode toggle (next-themes or similar) is added later, it modifies the html class attribute on the client before hydration completes.",
+    "guard_snippet": "<html lang=\"en\" className={inter.variable} suppressHydrationWarning>",
+    "potential_consequence": "WARNING: When dark mode toggling is implemented (the tailwind config already declares darkMode: ['class']), every page load will produce a React hydration mismatch warning in the console. The class-based dark mode infrastructure is half-built: the CSS variables and tailwind config are ready, but the layout lacks the hydration safety valve."
+  },
+  {
+    "location": "apps/web/src/app/layout.tsx:1-30",
+    "trigger_condition": "The Toaster component is defined in src/components/ui/toaster.tsx and the use-toast hook exists, but neither is imported nor rendered anywhere in the component tree.",
+    "guard_snippet": "Add to layout.tsx: import { Toaster } from '@/components/ui/toaster'; then render <Toaster /> inside <body> after {children}",
+    "potential_consequence": "CRITICAL: Any call to toast() from use-toast.ts will update the in-memory state but nothing will render the toast UI. Toasts are completely invisible. This is dead code until Toaster is mounted in the layout."
+  },
+  {
+    "location": "apps/web/tailwind.config.ts:5",
+    "trigger_condition": "Tailwind content paths are ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}']. The paths omit ./src/lib/**, ./src/hooks/**, and any future ./src/pages/** or ./src/features/** directories.",
+    "guard_snippet": "Change content to: ['./src/**/*.{ts,tsx}'] to catch all source directories",
+    "potential_consequence": "WARNING: Any Tailwind utility classes used in files under src/lib/ or src/hooks/ (or future directories like src/features/, src/layouts/) will be purged from the production CSS build. Currently src/lib/utils.ts and src/hooks/use-toast.ts do not use Tailwind classes, but this is a latent trap for future development."
+  },
+  {
+    "location": "apps/web/tailwind.config.ts:79",
+    "trigger_condition": "The plugins array uses require('tailwindcss-animate') which is CommonJS syntax inside a TypeScript file. Tailwind v3 handles this via jiti, but Tailwind v4 drops jiti and requires ESM imports.",
+    "guard_snippet": "Change to: import tailwindcssAnimate from 'tailwindcss-animate'; then plugins: [tailwindcssAnimate]",
+    "potential_consequence": "LOW: Not a current issue with Tailwind v3, but creates a migration blocker for Tailwind v4. The require() call will throw an ERR_REQUIRE_ESM error when upgrading."
+  },
+  {
+    "location": "apps/web/src/hooks/use-toast.ts:8",
+    "trigger_condition": "TOAST_REMOVE_DELAY is set to 1,000,000 milliseconds (16.7 minutes). Dismissed toasts remain in memory with active setTimeout handles for nearly 17 minutes before cleanup.",
+    "guard_snippet": "Change to: const TOAST_REMOVE_DELAY = 5000; (5 seconds, or a reasonable UX delay)",
+    "potential_consequence": "WARNING: In a dashboard application that shows frequent price alerts, rapid toast creation and dismissal will accumulate setTimeout handles and stale toast objects in memory. With TOAST_LIMIT=1, at most 1 toast renders, but dismissed toast objects and their timers persist for 16.7 minutes each."
+  },
+  {
+    "location": "apps/web/src/hooks/use-toast.ts:151",
+    "trigger_condition": "The useEffect dependency array includes [state], causing the listener to be unregistered and re-registered on every state change (every toast add/update/dismiss/remove).",
+    "guard_snippet": "Change useEffect dependency to []: React.useEffect(() => { listeners.push(setState); return () => { const index = listeners.indexOf(setState); if (index > -1) listeners.splice(index, 1); }; }, []);",
+    "potential_consequence": "WARNING: On every toast state change, the listener array is mutated (splice + push), causing unnecessary array reallocation. With frequent toasts this creates micro-GC pressure. The [state] dependency is unnecessary because setState identity is stable across renders."
+  },
+  {
+    "location": "apps/web/components.json:12-14",
+    "trigger_condition": "The shadcn/ui components.json aliases block only defines 'components' and 'utils'. It is missing 'ui', 'hooks', and 'lib' aliases.",
+    "guard_snippet": "Add: \"ui\": \"@/components/ui\", \"hooks\": \"@/hooks\", \"lib\": \"@/lib\"",
+    "potential_consequence": "WARNING: Running 'npx shadcn@latest add' for components that include hooks (like use-toast) will place files in incorrect locations or prompt for manual path input, because the CLI cannot resolve the hooks directory automatically."
+  },
+  {
+    "location": "apps/web/src/app/globals.css:52-59",
+    "trigger_condition": "The universal selector * { @apply border-border; } applies border-color to every element in the DOM, including <html>, <head>, <meta>, <script>, and all non-visual elements.",
+    "guard_snippet": "Consider scoping: *, *::before, *::after { border-color: hsl(var(--border)); } or use body * to exclude non-rendered elements (though this is standard shadcn/ui practice)",
+    "potential_consequence": "LOW: Standard shadcn/ui pattern, but applies a CSS rule to every DOM element including ~50+ non-visual elements. Minor performance impact on initial style calculation for large DOMs. Not a functional bug."
+  },
+  {
+    "location": "apps/web/src/app/globals.css:62-64",
+    "trigger_condition": "The .font-tabular class is defined outside any @layer directive. Tailwind utilities use @layer utilities which has lower specificity than unlayered styles.",
+    "guard_snippet": "Move into: @layer utilities { .font-tabular { font-variant-numeric: tabular-nums; } }",
+    "potential_consequence": "WARNING: Because .font-tabular is unlayered, it cannot be overridden by Tailwind utility classes like tabular-nums or proportional-nums using the normal Tailwind specificity model. If both are applied, .font-tabular always wins regardless of class order."
+  },
+  {
+    "location": "turbo.json:1-16",
+    "trigger_condition": "turbo.json does not define globalDependencies or globalEnv. Environment variables like NODE_ENV, NEXT_PUBLIC_*, or API keys do not invalidate the Turbo cache.",
+    "guard_snippet": "Add: \"globalDependencies\": [\".env\"], \"globalEnv\": [\"NODE_ENV\", \"NEXT_PUBLIC_*\"]",
+    "potential_consequence": "WARNING: Changing an environment variable (e.g., NEXT_PUBLIC_API_URL) will not bust the Turbo cache. Developers will get stale builds with old env values. The 'FULL TURBO' cache hit means even adding a .env file later won't trigger rebuilds."
+  },
+  {
+    "location": "tsconfig.base.json:16-17",
+    "trigger_condition": "noUnusedLocals and noUnusedParameters are set to true in the base tsconfig. These are inherited by the shared package which uses composite + tsc --build.",
+    "guard_snippet": "Consider setting noUnusedLocals/noUnusedParameters to false in base and enabling them per-package, or add // @ts-ignore pragmas as needed",
+    "potential_consequence": "LOW: Currently safe because shared/src/index.ts is trivial (export {}). But as shared grows, unused function parameters in type definitions, callback signatures, or interface implementations will cause tsc --build to fail. This is especially problematic with generated code or library type stubs."
+  },
+  {
+    "location": "apps/web/tsconfig.json:3-9",
+    "trigger_condition": "Web tsconfig inherits declaration: true and declarationMap: true from base, but also sets noEmit: true. The declaration/declarationMap settings are silently ignored when noEmit is true.",
+    "guard_snippet": "No code change needed, but document that base tsconfig's declaration settings are overridden by web's noEmit: true",
+    "potential_consequence": "LOW: Not a bug -- Next.js handles type checking separately. But it is confusing for developers reading the config: the effective compiler options differ from what the inheritance chain suggests. A developer might add a 'typecheck' script expecting .d.ts output and get none."
+  },
+  {
+    "location": "package.json:21",
+    "trigger_condition": "packageManager field specifies npm@10.8.2 but no .nvmrc, .node-version, or .tool-versions file exists. The engines field requires node >= 18.17.0 but this is not enforced.",
+    "guard_snippet": "Add .nvmrc with: 18.17.0 (or lts/hydrogen). Optionally add \"engines\": { \"strict\": true } or an .npmrc with engine-strict=true",
+    "potential_consequence": "LOW: Without engine-strict, npm install succeeds on any Node version. A developer on Node 16 or 23 will get cryptic failures from Next.js 14 or TypeScript features. The packageManager field only works if corepack is enabled, which is not the default."
+  },
+  {
+    "location": "apps/web/src/components/ui/dialog.tsx:43",
+    "trigger_condition": "The Dialog close button X icon is 16x16px (h-4 w-4) with no minimum touch target size. WCAG 2.5.8 (Target Size minimum) requires interactive elements to be at least 24x24px.",
+    "guard_snippet": "Add padding or min size to the close button: className=\"... min-h-[44px] min-w-[44px] flex items-center justify-center\"",
+    "potential_consequence": "LOW: On touch devices, the small close button (16x16 visible area within a roughly 24x24 clickable area due to padding) may be difficult to tap accurately. The absolute positioning with right-4 top-4 provides some implicit padding, but the actual interactive element is small."
+  },
+  {
+    "location": "apps/web/src/components/ui/input.tsx:12",
+    "trigger_condition": "The Input component uses ring-offset-background utility class which references Tailwind's ring-offset-color. This requires the CSS variable --background to be available, which it is via globals.css, but the ring-offset-color is not explicitly configured in tailwind.config.ts.",
+    "guard_snippet": "This works because Tailwind's ring-offset utility with arbitrary values: ring-offset-background resolves via the configured 'background' color token. No change needed, but add a comment for clarity.",
+    "potential_consequence": "LOW: Works correctly because 'background' is defined as a Tailwind color token. If the 'background' color key were ever renamed or removed from the Tailwind config, the ring-offset would silently fall back to transparent."
+  },
+  {
+    "location": "package.json:5-8",
+    "trigger_condition": "Root package.json uses npm workspaces with glob patterns 'apps/*' and 'packages/*'. If a non-package directory (e.g., apps/docs, packages/config) is added without a package.json, npm install will fail.",
+    "guard_snippet": "Use explicit workspace paths instead of globs if the project structure is stable, or document the workspace convention",
+    "potential_consequence": "LOW: Standard monorepo pattern, but any directory accidentally created under apps/ or packages/ without a package.json will cause npm install to error with 'ENOENT: no such file or directory, open .../package.json'."
+  },
+  {
+    "location": "apps/web/package.json:1-36",
+    "trigger_condition": "No test script or test framework (jest, vitest, @testing-library) is configured in the web app. The Turbo pipeline does not include a 'test' task.",
+    "guard_snippet": "Add vitest + @testing-library/react to devDependencies. Add \"test\": \"vitest run\" to scripts. Add test task to turbo.json.",
+    "potential_consequence": "WARNING: There is no automated testing infrastructure. UI components (Button, Dialog, Toast, Table, Input) ship with zero test coverage. Regressions from future shadcn/ui component updates or Tailwind config changes will not be caught."
+  },
+  {
+    "location": "apps/web/package.json:16",
+    "trigger_condition": "eslint-config-next is pinned to ^14.2.29 while the resolved eslint-config-next version is 14.2.35 (matching the resolved next version). But eslint is pinned to ^8.57.1, and eslint-config-next ^14 only supports eslint ^7.23.0 || ^8.0.0. ESLint 9.x is the current major release.",
+    "guard_snippet": "Document that ESLint 9 migration requires eslint-config-next 15+ and Next.js 15",
+    "potential_consequence": "LOW: Not broken today, but the ESLint 8 + eslint-config-next 14 combination is a dead end. ESLint 8 is in maintenance mode. When upgrading to ESLint 9, the flat config format is required, the .eslintrc.json format is deprecated, and eslint-config-next must be upgraded to v15+ simultaneously."
+  }
+]

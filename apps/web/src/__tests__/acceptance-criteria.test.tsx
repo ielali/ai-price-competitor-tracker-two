@@ -4,6 +4,7 @@
  *
  * Each test maps to a specific acceptance criterion from the story spec.
  */
+import type { ReactElement, ReactNode } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Sidebar } from "@/components/layout/sidebar";
@@ -104,7 +105,26 @@ vi.mock("@/stores/sidebar-store", () => ({
   }),
 }));
 
+vi.mock("next-auth/react", () => ({
+  useSession: () => ({
+    data: { user: { email: "user@example.com", id: "user@example.com" } },
+    status: "authenticated",
+  }),
+  signOut: vi.fn(),
+}));
+
+vi.mock("@/auth", () => ({
+  auth: vi.fn().mockResolvedValue({
+    user: { email: "user@example.com", id: "user@example.com" },
+  }),
+}));
+
 describe("Acceptance Criteria", () => {
+  async function renderDashboardLayout(children: ReactNode) {
+    const ui = await DashboardLayout({ children });
+    render(ui as ReactElement);
+  }
+
   beforeEach(() => {
     mockPathname = "/";
     mockCollapsed = false;
@@ -253,13 +273,9 @@ describe("Acceptance Criteria", () => {
   });
 
   describe("AC5: Content area has max-width 1440px, centered, 24px padding", () => {
-    it("content container has max-w-content, mx-auto, p-6", () => {
+    it("content container has max-w-content, mx-auto, p-6", async () => {
       mockPathname = "/products";
-      render(
-        <DashboardLayout>
-          <div>Content</div>
-        </DashboardLayout>
-      );
+      await renderDashboardLayout(<div>Content</div>);
       const main = screen.getByRole("main");
       const container = main.firstElementChild;
       expect(container).toHaveClass("max-w-content");
@@ -350,43 +366,27 @@ describe("Acceptance Criteria", () => {
   });
 
   describe("AC8: Skip-to-content link is present and functional", () => {
-    it("skip link is present and points to #main-content", () => {
-      render(
-        <DashboardLayout>
-          <div>Content</div>
-        </DashboardLayout>
-      );
+    it("skip link is present and points to #main-content", async () => {
+      await renderDashboardLayout(<div>Content</div>);
       const skipLink = screen.getByText("Skip to content");
       expect(skipLink.tagName).toBe("A");
       expect(skipLink).toHaveAttribute("href", "#main-content");
     });
 
-    it("main has id=main-content for skip link target", () => {
-      render(
-        <DashboardLayout>
-          <div>Content</div>
-        </DashboardLayout>
-      );
+    it("main has id=main-content for skip link target", async () => {
+      await renderDashboardLayout(<div>Content</div>);
       const main = screen.getByRole("main");
       expect(main).toHaveAttribute("id", "main-content");
     });
 
-    it("main has tabindex=-1 for programmatic focus", () => {
-      render(
-        <DashboardLayout>
-          <div>Content</div>
-        </DashboardLayout>
-      );
+    it("main has tabindex=-1 for programmatic focus", async () => {
+      await renderDashboardLayout(<div>Content</div>);
       const main = screen.getByRole("main");
       expect(main).toHaveAttribute("tabindex", "-1");
     });
 
-    it("skip link has sr-only class (visually hidden until focused)", () => {
-      render(
-        <DashboardLayout>
-          <div>Content</div>
-        </DashboardLayout>
-      );
+    it("skip link has sr-only class (visually hidden until focused)", async () => {
+      await renderDashboardLayout(<div>Content</div>);
       const skipLink = screen.getByText("Skip to content");
       expect(skipLink).toHaveClass("sr-only");
     });

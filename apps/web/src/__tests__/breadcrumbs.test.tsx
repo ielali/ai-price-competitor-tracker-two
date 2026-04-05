@@ -6,8 +6,11 @@ let mockPathname = "/";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+<<<<<<< ours
   useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
   useSearchParams: () => new URLSearchParams(),
+=======
+>>>>>>> theirs
 }));
 
 vi.mock("next/link", () => ({

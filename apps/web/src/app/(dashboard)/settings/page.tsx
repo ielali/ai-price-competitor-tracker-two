@@ -1,5 +1,8 @@
+<<<<<<< ours
 import { LogoutButton } from "@/components/auth/logout-button";
 
+=======
+>>>>>>> theirs
 export default function SettingsPage() {
   return (
     <div>
@@ -7,6 +10,7 @@ export default function SettingsPage() {
       <p className="mt-2 text-muted-foreground">
         Application settings coming soon.
       </p>
+<<<<<<< ours
 
       <section
         className="mt-10 max-w-md rounded-lg border border-border bg-card p-6"
@@ -22,6 +26,8 @@ export default function SettingsPage() {
           <LogoutButton className="w-full sm:w-auto" />
         </div>
       </section>
+=======
+>>>>>>> theirs
     </div>
   );
 }

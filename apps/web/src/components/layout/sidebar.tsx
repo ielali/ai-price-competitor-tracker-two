@@ -10,10 +10,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useSidebarStore } from "@/stores/sidebar-store";
+<<<<<<< ours
 import { useAlertHistoryStore } from "@/stores/alert-history-store";
 import { countUnreadAlerts } from "@/lib/alert-history-filters";
 import { mainNavItems, bottomNavItem } from "./nav-items";
 import { LogoutButton } from "@/components/auth/logout-button";
+=======
+import { mainNavItems, bottomNavItem } from "./nav-items";
+>>>>>>> theirs
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -23,9 +27,12 @@ function isActivePath(pathname: string, href: string) {
 export function Sidebar() {
   const { collapsed, toggle } = useSidebarStore();
   const pathname = usePathname();
+<<<<<<< ours
   const unreadAlerts = useAlertHistoryStore((s) =>
     countUnreadAlerts(s.entries)
   );
+=======
+>>>>>>> theirs
 
   return (
     <aside
@@ -52,12 +59,23 @@ export function Sidebar() {
                           "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                           active
+<<<<<<< ours
+<<<<<<< ours
                             ? "bg-accent text-accent-foreground border-l-2 border-primary"
                             : "text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground border-l-2 border-transparent"
+=======
+                            ? "bg-accent text-accent-foreground"
+                            : "text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
+>>>>>>> theirs
+=======
+                            ? "bg-accent text-accent-foreground border-l-2 border-primary"
+                            : "text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground border-l-2 border-transparent"
+>>>>>>> theirs
                         )}
                       />
                     }
                   >
+<<<<<<< ours
                     <span className="relative inline-flex shrink-0">
                       <Icon className="size-5" />
                       {item.href === "/alerts" && unreadAlerts > 0 ? (
@@ -72,6 +90,10 @@ export function Sidebar() {
                     {!collapsed && (
                       <span data-nav-label>{item.label}</span>
                     )}
+=======
+                    <Icon className="size-5 shrink-0" />
+                    {!collapsed && <span>{item.label}</span>}
+>>>>>>> theirs
                   </TooltipTrigger>
                   {collapsed && (
                     <TooltipContent side="right">
@@ -98,16 +120,30 @@ export function Sidebar() {
                       "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                       isActivePath(pathname, bottomNavItem.href)
+<<<<<<< ours
+<<<<<<< ours
                         ? "bg-accent text-accent-foreground border-l-2 border-primary"
                         : "border-l-2 border-transparent text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
+=======
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
+>>>>>>> theirs
+=======
+                        ? "bg-accent text-accent-foreground border-l-2 border-primary"
+                        : "border-l-2 border-transparent text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground"
+>>>>>>> theirs
                     )}
                   />
                 }
               >
                 <bottomNavItem.icon className="size-5 shrink-0" />
+<<<<<<< ours
                 {!collapsed && (
                   <span data-nav-label>{bottomNavItem.label}</span>
                 )}
+=======
+                {!collapsed && <span>{bottomNavItem.label}</span>}
+>>>>>>> theirs
               </TooltipTrigger>
               {collapsed && (
                 <TooltipContent side="right">
@@ -116,10 +152,13 @@ export function Sidebar() {
               )}
             </Tooltip>
           </li>
+<<<<<<< ours
 
           <li className="mt-1">
             <LogoutButton layout="nav-row" sidebarCollapsed={collapsed} />
           </li>
+=======
+>>>>>>> theirs
         </ul>
       </nav>
 

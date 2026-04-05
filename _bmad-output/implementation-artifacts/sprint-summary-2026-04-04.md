@@ -3,12 +3,24 @@
 **Planning date:** 2026-04-04  
 **Role:** Scrum Master — sprint planning refresh and development coordination.
 
+<<<<<<< ours
+<<<<<<< ours
 ## Session linkage (harness)
 
 - **Task:** `16e05aa2-28aa-44ec-847b-3e192922e51f`
 - **Story:** `ai-competitor-price-tracker-impl-retro-shell`
 - **Artifact:** `sprint_summary` published via bmad-harness for this Scrum Master planning cycle (2026-04-04 coordination refresh).
 
+=======
+>>>>>>> theirs
+=======
+## Session linkage (harness)
+
+- **Task:** `16e05aa2-28aa-44ec-847b-3e192922e51f`
+- **Story:** `ai-competitor-price-tracker-impl-retro-shell`
+- **Artifact:** `sprint_summary` published via bmad-harness for this Scrum Master planning cycle (2026-04-04 coordination refresh).
+
+>>>>>>> theirs
 ## Sprint objectives (near term)
 
 1. Close out **Epic 1 — Project Foundation & App Shell** by finishing work in **review** (stories 1.1 and 1.2), then advancing **1-3-authentication-and-session-management** from backlog.
@@ -48,6 +60,8 @@
 
 - On any story → **done**, update YAML and roll up epic status.
 - Before agent handoff, confirm the story markdown exists here if status is **ready-for-dev** or higher.
+<<<<<<< ours
+<<<<<<< ours
 
 ## Sprint planning validation (refreshed)
 
@@ -57,6 +71,22 @@
 
 ## SM facilitation — development workflow
 
+=======
+
+## Sprint planning validation (refreshed)
+
+- Every epic and story in `sprint-status.yaml` matches the planned product backlog inventory (10 epics, 30 stories, 10 retrospective rows).
+- Story artifact files on disk: `1-1-initialize-nextjs-project-with-design-system.md`, `1-2-app-shell-layout-with-sidebar-navigation.md` (aligned with **review** statuses for 1.1 and 1.2).
+- No status downgrades applied; YAML remains valid and ordered epic → stories → retrospective per epic.
+
+## SM facilitation — development workflow
+
+<<<<<<< ours
+**Task:** `215bd2fc-0f5e-4ef6-b6cb-2a94361f8bba` · **Story:** `42d7471a-fea3-49af-a3ba-f8c29965a86a`
+
+>>>>>>> theirs
+=======
+>>>>>>> theirs
 | Area | Agreement |
 |------|-----------|
 | **Source of truth** | `sprint-status.yaml` — never downgrade a status; refresh from epic inventory when new story keys appear. |
@@ -66,7 +96,18 @@
 | **Handoff checklist** | Story key in YAML matches filename; acceptance criteria in the story doc; status matches actual work. |
 
 **Immediate sequence:** Finish **review** for 1.1 and 1.2 → **done** → create or open **1-3-authentication-and-session-management** for **ready-for-dev** / **in-progress** → keep Epic 2–10 in **backlog** until Epic 1 stabilizes.
+<<<<<<< ours
+<<<<<<< ours
+=======
+>>>>>>> theirs
 
 ## Compliance note (this session)
 
 - **Secret scan:** `gitleaks` is not installed in this environment (GitHub releases egress blocked). A high-signal pattern scan (AWS-style keys, PEM private keys, `ghp_`/`sk_live_`/Slack token shapes) was run across `stories/ai-competitor-price-tracker-impl-retro-shell` with **no matches**.
+<<<<<<< ours
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs
+=======
+>>>>>>> theirs

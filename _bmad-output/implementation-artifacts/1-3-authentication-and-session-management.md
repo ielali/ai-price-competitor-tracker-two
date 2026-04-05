@@ -1,56 +1,42 @@
-# Story 1.3: Authentication & Session Management
+# Story 1.3: Authentication and Session Management
 
 Status: review
 
 ## Story
 
 As a **user of the AI Competitor Price Tracker**,
-I want to sign in and register with email and password, with sessions that survive refresh,
-so that my dashboard and data stay private to authenticated users.
+I want to sign in with a secure session and access only authenticated areas of the app,
+so that competitor and pricing data stays private to my workspace.
 
 ## Acceptance Criteria
 
-1. Login page with email + password fields, validation, and error display
-2. Register page with name, email, password, and confirm password
-3. JWT access token + refresh token flow implemented
-4. Protected routes redirect unauthenticated users to login
-5. Session persists across browser refresh (token stored securely)
-6. Logout clears session and redirects to login
-7. API rate limiting enforced on auth endpoints
-8. Form inputs have visible labels and `aria-describedby` error links (WCAG)
-
-## Implementation summary
-
-- **HTTP-only cookies** `pt_access` (15m) and `pt_refresh` (7d) store JWTs; middleware verifies access, rotates via refresh when expired, and redirects to `/login` when unauthenticated.
-- **API routes** under `app/api/auth/`: `login`, `register`, `refresh`, `logout` with shared per-IP rate limits.
-- **Auth UI** at `/login` and `/register` with accessible forms; **logout** in the sidebar and on Settings.
-- **User store**: JSON file under `apps/web/.data/users.json` (dev / single-node; replace with a real database for production).
-
-## File List (primary)
-
-- `apps/web/src/middleware.ts`
-- `apps/web/src/lib/auth/*`
-- `apps/web/src/app/api/auth/login/route.ts`
-- `apps/web/src/app/api/auth/register/route.ts`
-- `apps/web/src/app/api/auth/refresh/route.ts`
-- `apps/web/src/app/api/auth/logout/route.ts`
-- `apps/web/src/app/(auth)/layout.tsx`
-- `apps/web/src/app/(auth)/login/page.tsx`
-- `apps/web/src/app/(auth)/register/page.tsx`
-- `apps/web/src/components/auth/login-form.tsx`
-- `apps/web/src/components/auth/register-form.tsx`
-- `apps/web/src/components/auth/logout-button.tsx`
-- `apps/web/src/__tests__/auth-*.test.ts`
-- Removed duplicate `apps/web/src/app/page.tsx` in favor of `(dashboard)/page.tsx` for `/`.
-
-## Configuration
-
-- Set `AUTH_SECRET` to at least 32 characters in production (see `apps/web/.env.example`).
+1. Unauthenticated requests to app routes (except `/login` and static assets) redirect to `/login` with `callbackUrl` preserved.
+2. `/login` renders an accessible email + password form using the existing design system (`Input`, `Button`).
+3. Successful credentials issue a JWT session (Auth.js / NextAuth v5) with configurable demo user via `AUTH_DEMO_EMAIL` / `AUTH_DEMO_PASSWORD` (defaults documented in `.env.example`).
+4. Production requires `AUTH_SECRET`; development falls back to an explicit insecure default only when `NODE_ENV !== "production"`.
+5. Authenticated users can use all dashboard routes; session user id/email is available server-side via `auth()`.
+6. Dashboard shell shows the signed-in email and a **Sign out** control that clears the session and returns to `/login`.
+7. Automated tests cover credential validation and login form success/error paths.
 
 ## Dev Agent Record
 
+### File List
+
+- `apps/web/package.json` — `next-auth` dependency
+- `apps/web/.env.example` — auth env template
+- `apps/web/src/auth.ts` — Auth.js configuration
+- `apps/web/src/middleware.ts` — route protection
+- `apps/web/src/app/api/auth/[...nextauth]/route.ts`
+- `apps/web/src/app/(auth)/layout.tsx`, `(auth)/login/page.tsx`
+- `apps/web/src/components/providers/app-providers.tsx`
+- `apps/web/src/components/auth/login-form.tsx`
+- `apps/web/src/components/layout/user-menu.tsx`
+- `apps/web/src/lib/demo-auth.ts`
+- `apps/web/src/types/next-auth.d.ts`
+- `apps/web/src/app/layout.tsx` — `SessionProvider` wrapper
+- `apps/web/src/app/(dashboard)/layout.tsx` — user menu
+- Removed duplicate `apps/web/src/app/page.tsx` (dashboard `(dashboard)/page.tsx` owns `/`)
+
 ### Completion Notes
 
-- JWT access/refresh with `jose`; passwords hashed with `bcryptjs`.
-- Rate limiting: in-memory sliding counters per IP on auth routes.
-- Open redirect on `from` query mitigated (relative paths only, no `//`).
+- Demo credentials provider is intentional for local/dev; replace with OIDC or API-backed auth for production.

@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom/vitest";
+<<<<<<< ours
 
 process.env.AUTH_SECRET = "test-auth-secret-32-characters-min!!";
 
@@ -17,3 +18,5 @@ if (
 ) {
   Element.prototype.scrollIntoView = () => {};
 }
+=======
+>>>>>>> theirs

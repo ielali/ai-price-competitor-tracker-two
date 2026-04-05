@@ -10,7 +10,10 @@ export default defineConfig({
     globals: true,
   },
   resolve: {
+<<<<<<< ours
     conditions: ["node", "import"],
+=======
+>>>>>>> theirs
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
