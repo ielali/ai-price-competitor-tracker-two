@@ -1,6 +1,6 @@
 # Story 7.3: Alert History & Activity Log
 
-Status: review
+Status: done
 
 ## Story
 

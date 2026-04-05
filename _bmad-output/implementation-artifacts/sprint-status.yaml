@@ -89,7 +89,7 @@ development_status:
   epic-7: in-progress
   7-1-alert-rule-builder: backlog
   7-2-notification-delivery-email-slack-webhook: backlog
-  7-3-alert-history-and-activity-log: review
+  7-3-alert-history-and-activity-log: done
   epic-7-retrospective: optional
 
   # Epic 8: Dashboard & Reporting
