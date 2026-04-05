@@ -2,11 +2,24 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { validateDemoCredentials } from '@/lib/demo-auth';
 
+function resolveAuthSecret(): string {
+  const fromEnv = process.env.AUTH_SECRET;
+  const isProd = process.env.NODE_ENV === 'production';
+  /** During `next build`, Next sets this phase while evaluating server modules. */
+  const isNextProdBuild = process.env.NEXT_PHASE === 'phase-production-build';
+
+  if (isProd && !fromEnv) {
+    if (isNextProdBuild) {
+      return 'build-placeholder-set-AUTH_SECRET-for-runtime';
+    }
+    throw new Error('AUTH_SECRET is required in production');
+  }
+  return fromEnv ?? 'dev-auth-secret-change-me';
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
-  secret:
-    process.env.AUTH_SECRET ??
-    (process.env.NODE_ENV === 'production' ? undefined : 'dev-auth-secret-change-me'),
+  secret: resolveAuthSecret(),
   session: { strategy: 'jwt', maxAge: 60 * 60 * 8 },
   pages: {
     signIn: '/login',
