@@ -1,0 +1,55 @@
+import type { AlertHistoryEntry } from "./alert-history-types";
+
+/** Demo dataset until API wiring exists (Story 7.2). */
+export const ALERT_HISTORY_SEED: AlertHistoryEntry[] = [
+  {
+    id: "ah-001",
+    occurredAt: "2026-04-04T14:32:00.000Z",
+    productId: "prod-a",
+    productName: "Widget Pro",
+    triggerCondition: "Price dropped 8% vs. 7-day avg",
+    channel: "Email",
+    status: "new",
+    archived: false,
+  },
+  {
+    id: "ah-002",
+    occurredAt: "2026-04-04T11:05:00.000Z",
+    productId: "prod-b",
+    productName: "Gadget Plus",
+    triggerCondition: "Competitor price below threshold ($49)",
+    channel: "Slack",
+    status: "new",
+    archived: false,
+  },
+  {
+    id: "ah-003",
+    occurredAt: "2026-04-03T09:18:00.000Z",
+    productId: "prod-a",
+    productName: "Widget Pro",
+    triggerCondition: "Price change exceeded 5%",
+    channel: "Webhook",
+    status: "acknowledged",
+    archived: false,
+  },
+  {
+    id: "ah-004",
+    occurredAt: "2026-04-02T16:44:00.000Z",
+    productId: "prod-c",
+    productName: "Sensor Kit",
+    triggerCondition: "Ranks fell to #4 in category",
+    channel: "Email",
+    status: "resolved",
+    archived: false,
+  },
+  {
+    id: "ah-005",
+    occurredAt: "2026-03-28T08:00:00.000Z",
+    productId: "prod-b",
+    productName: "Gadget Plus",
+    triggerCondition: "Stale price — no scrape for 48h",
+    channel: "Email",
+    status: "resolved",
+    archived: true,
+  },
+];

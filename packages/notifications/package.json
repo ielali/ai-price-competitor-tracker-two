@@ -1,0 +1,27 @@
+{
+  "name": "@price-tracker/notifications",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+<<<<<<< ours
+<<<<<<< ours
+    "next": "16.2.2",
+    "nodemailer": "^8.0.4"
+=======
+    "nodemailer": "^6.9.16"
+>>>>>>> theirs
+=======
+    "next": "16.2.2",
+    "nodemailer": "^8.0.4"
+>>>>>>> theirs
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/nodemailer": "^6.4.17",
+    "typescript": "^5",
+    "vitest": "^4.1.2"
+  }
+}
