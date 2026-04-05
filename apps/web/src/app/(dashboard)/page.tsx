@@ -1,7 +1,4 @@
-import { Suspense } from "react";
-
-import { ScrapingStatusPanel } from "@/components/dashboard/scraping-status-panel";
-import { ScrapingStatusSkeleton } from "@/components/dashboard/scraping-status-skeleton";
+import { ScrapingStatusLive } from "@/components/dashboard/scraping-status-live";
 
 export default function DashboardPage() {
   return (
@@ -15,9 +12,7 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      <Suspense fallback={<ScrapingStatusSkeleton />}>
-        <ScrapingStatusPanel />
-      </Suspense>
+      <ScrapingStatusLive />
     </div>
   );
 }

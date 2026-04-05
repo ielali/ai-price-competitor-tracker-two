@@ -1,5 +1,5 @@
 # generated: 2026-04-04
-# last_updated: 2026-04-05T00:40:00Z
+# last_updated: 2026-04-05T01:00:00Z
 # project: ai-competitor-price-tracker
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-04-04
-last_updated: 2026-04-05T00:40:00Z
+last_updated: 2026-04-05T01:00:00Z
 project: ai-competitor-price-tracker
 project_key: NOKEY
 tracking_system: file-system
@@ -68,7 +68,7 @@ development_status:
   epic-4: backlog
   4-1-scraping-job-scheduler-and-queue: backlog
   4-2-price-data-extraction-and-normalization: backlog
-  4-3-scraping-status-dashboard-integration: backlog
+  4-3-scraping-status-dashboard-integration: review
   epic-4-retrospective: optional
 
   # Epic 5: Price History & Time-Series Storage
