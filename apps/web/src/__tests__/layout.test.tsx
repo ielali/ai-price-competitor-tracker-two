@@ -1,0 +1,167 @@
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import DashboardLayout from "@/app/(dashboard)/layout";
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/products",
+}));
+
+vi.mock("next/link", () => ({
+  default: ({
+    children,
+    href,
+    ...props
+  }: {
+    children: React.ReactNode;
+    href: string;
+    [key: string]: unknown;
+  }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
+
+vi.mock("@/components/ui/tooltip", () => ({
+  Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  TooltipTrigger: ({
+    children,
+    render,
+  }: {
+    children: React.ReactNode;
+    render?: React.ReactElement;
+  }) => {
+    if (render) {
+      const el = render as React.ReactElement<Record<string, unknown>>;
+      const Comp = el.type as React.ElementType;
+      return <Comp {...el.props}>{children}</Comp>;
+    }
+    return <>{children}</>;
+  },
+  TooltipContent: ({ children }: { children: React.ReactNode }) => (
+    <div role="tooltip">{children}</div>
+  ),
+  TooltipProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+}));
+
+vi.mock("@/stores/sidebar-store", () => ({
+  useSidebarStore: () => ({
+    collapsed: false,
+    toggle: vi.fn(),
+  }),
+}));
+
+vi.mock("@/components/ui/breadcrumb", () => ({
+  Breadcrumb: ({ children, ...props }: React.ComponentProps<"nav">) => (
+    <nav aria-label="Breadcrumb" {...props}>
+      {children}
+    </nav>
+  ),
+  BreadcrumbList: ({ children, ...props }: React.ComponentProps<"ol">) => (
+    <ol {...props}>{children}</ol>
+  ),
+  BreadcrumbItem: ({ children, ...props }: React.ComponentProps<"li">) => (
+    <li {...props}>{children}</li>
+  ),
+  BreadcrumbLink: ({
+    children,
+    render,
+  }: {
+    children?: React.ReactNode;
+    render?: React.ReactElement;
+  }) => {
+    if (render) {
+      const el = render as React.ReactElement<Record<string, unknown>>;
+      const Comp = el.type as React.ElementType;
+      return <Comp {...el.props}>{children}</Comp>;
+    }
+    return <a>{children}</a>;
+  },
+  BreadcrumbPage: ({ children, ...props }: React.ComponentProps<"span">) => (
+    <span aria-current="page" {...props}>
+      {children}
+    </span>
+  ),
+  BreadcrumbSeparator: () => <li aria-hidden="true">/</li>,
+}));
+
+describe("DashboardLayout", () => {
+  it("renders skip-to-content link as first focusable element", () => {
+    render(
+      <DashboardLayout>
+        <div>Page content</div>
+      </DashboardLayout>
+    );
+    const skipLink = screen.getByText("Skip to content");
+    expect(skipLink).toBeInTheDocument();
+    expect(skipLink).toHaveAttribute("href", "#main-content");
+    expect(skipLink.tagName).toBe("A");
+  });
+
+  it("renders main content area with correct id and tabindex", () => {
+    render(
+      <DashboardLayout>
+        <div>Page content</div>
+      </DashboardLayout>
+    );
+    const main = screen.getByRole("main");
+    expect(main).toHaveAttribute("id", "main-content");
+    expect(main).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("renders children inside the content area", () => {
+    render(
+      <DashboardLayout>
+        <div data-testid="child">Hello world</div>
+      </DashboardLayout>
+    );
+    expect(screen.getByTestId("child")).toBeInTheDocument();
+    expect(screen.getByText("Hello world")).toBeInTheDocument();
+  });
+
+  it("renders sidebar component", () => {
+    render(
+      <DashboardLayout>
+        <div>Page content</div>
+      </DashboardLayout>
+    );
+    expect(
+      screen.getByRole("navigation", { name: "Main navigation" })
+    ).toBeInTheDocument();
+  });
+
+  it("renders mobile navigation", () => {
+    render(
+      <DashboardLayout>
+        <div>Page content</div>
+      </DashboardLayout>
+    );
+    expect(
+      screen.getByRole("navigation", { name: "Mobile navigation" })
+    ).toBeInTheDocument();
+  });
+
+  it("renders breadcrumbs for non-root pages", () => {
+    render(
+      <DashboardLayout>
+        <div>Page content</div>
+      </DashboardLayout>
+    );
+    expect(
+      screen.getByRole("navigation", { name: "Breadcrumb" })
+    ).toBeInTheDocument();
+  });
+
+  it("content area has max-width container with p-6 padding", () => {
+    render(
+      <DashboardLayout>
+        <div data-testid="child">Page content</div>
+      </DashboardLayout>
+    );
+    const main = screen.getByRole("main");
+    const container = main.firstElementChild;
+    expect(container).toHaveClass("mx-auto", "max-w-content", "p-6");
+  });
+});
