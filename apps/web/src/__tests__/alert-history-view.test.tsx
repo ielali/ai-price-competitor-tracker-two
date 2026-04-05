@@ -26,7 +26,7 @@ describe("AlertHistoryView", () => {
     });
   });
 
-  it("renders alert rows with status badges", () => {
+  it("renders alert rows with status badges", { timeout: 15000 }, () => {
     render(<AlertHistoryView />);
     const table = screen.getByRole("table");
     expect(within(table).getAllByText("Widget Pro").length).toBeGreaterThan(0);

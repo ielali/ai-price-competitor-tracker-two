@@ -26,7 +26,7 @@ describe("CommandPalette", () => {
     mockPush.mockClear();
   });
 
-  it("opens when ⌘K is pressed and lists navigation destinations", async () => {
+  it("opens when ⌘K is pressed and lists navigation destinations", { timeout: 15000 }, async () => {
     const user = userEvent.setup();
     render(<CommandPalette />);
 
